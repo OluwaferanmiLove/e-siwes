@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('phone_number');
-            $table->enum('role', ['Admin', 'Staff', 'Doctor']);
+            $table->string('phone_number')->nullable();
+            $table->enum('role', ['Admin', 'Supervisor', 'Student']);
             $table->rememberToken();
             $table->timestamps();
         });
