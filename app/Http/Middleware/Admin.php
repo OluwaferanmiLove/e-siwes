@@ -20,10 +20,10 @@ class Admin
     {
         if (Auth::user()->role == 'Admin') {
             return $next($request);
-        } elseif (Auth::user()->role == 'Doctor') {
-            return redirect()->route('doctor');
-        } elseif (Auth::user()->role == 'Staff') {
-            return redirect()->route('staff');
+        } elseif (Auth::user()->role == 'Lecturer') {
+            return redirect('/lecturer');
+        } elseif (Auth::user()->role == 'Student') {
+            return redirect('/student');
         } else {
             Session::flash('permission_warning', 'Permission not granted');
             return redirect('/');

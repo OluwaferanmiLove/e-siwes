@@ -43,16 +43,16 @@ class LoginController extends Controller
     {
         $role = Auth::user()->role;
         switch ($role) {
+            case 'Student':
+                return '/student';
+                break;
+
+            case 'Supervisor':
+                return '/supervisor';
+                break;
+
             case 'Admin':
                 return '/admin';
-                break;
-
-            case 'Staff':
-                return '/staff';
-                break;
-
-            case 'Doctor':
-                return '/doctor';
                 break;
             default:
                 return '/logout';

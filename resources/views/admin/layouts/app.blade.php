@@ -1,64 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from educhamp.themetrades.com/demo/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:08:15 GMT -->
+<!-- Mirrored from techydevs.com/demos/themes/html/zobstar/employer-dashboard.html by HTTrack userssite Copier/3.x [XR&CO'2014], Thu, 22 Oct 2020 09:20:23 GMT -->
 
 <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="author" content="Ehruoghene">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Dashboard - {{ $title  ?? '' }}</title>
+    <!-- Favicon -->
 
-	<!-- META ============================================= -->
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="keywords" content="" />
-	<meta name="author" content="" />
-	<meta name="robots" content="" />
+    <!-- FAVICONS ICON ============================================= -->
+    <link rel="icon" href="{{ asset('web/assets/images/favicon.ico') }}" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('web/assets/images/favicon.png') }}" />
 
-	<!-- MOBILE SPECIFIC ============================================= -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:100,300,400,500,700,900&amp;display=swap" rel="stylesheet">
 
-	<!-- PAGE TITLE HERE ============================================= -->
-	<title>admin Dashboard - {{$title ?? ''}} </title>
-
-	<!-- MOBILE SPECIFIC ============================================= -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<!-- FAVICONS ICON ============================================= -->
-	<link rel="apple-touch-icon" href="apple-icon.png">
-	<link rel="shortcut icon" href="favicon.ico">
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-
-	@include('admin.layouts.includes.style')
-
-	@include('admin.layouts.includes.alert')
-
+    <!-- Template CSS Files -->
+    @include('admin.layouts.includes.style')
+    @include('admin.layouts.includes.alert')
 </head>
 
 <body>
+    <!-- start per-loader -->
+    {{-- <div class="loader-container">
+    <div class="loader-circle">
+        <div class="loader">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+</div> --}}
+    <!-- end per-loader -->
 
-	<!-- Left Panel -->
+    <!-- ================================
+            START HEADER AREA
+================================= -->
+    @include('admin.layouts.includes.header')
+    <!-- ================================
+         END HEADER AREA
+================================= -->
 
-	@include('admin.layouts.includes.sidemenu')
+    <!-- ================================
+    START DASHBOARD AREA
+================================= -->
 
-	<!-- Left Panel -->
+    <section class="dashboard-area">
+        @include('admin.layouts.includes.sidemenu')
+        <div class="dashboard-content-wrap">
+            <div class="container-fluid">
+                @yield('admin')
+                @include('admin.layouts.includes.footer')
+            </div><!-- end container-fluid -->
+        </div>
+    </section><!-- end dashboard-area -->
+    <!-- ================================
+    END DASHBOARD AREA
+================================= -->
 
-	<!-- Right Panel -->
+    <!-- start back-to-top -->
+    <div id="back-to-top">
+        <i class="fa fa-angle-up" title="Go top"></i>
+    </div>
+    <!-- end back-to-top -->
 
-	<div id="right-panel" class="right-panel">
-
-		<!-- Header-->
-		@include('admin.layouts.includes.header')
-		<!-- /header -->
-		<!-- Header-->
-
-		@yield('admin')
-	</div>
-	<!-- /#right-panel -->
-
-	<!-- Right Panel -->
-
+    <!-- Template JS Files -->
+    @include('admin.layouts.includes.script')
 
 </body>
 
-<!-- External JavaScripts -->
-@include('admin.layouts.includes.script')
+<!-- Mirrored from techydevs.com/demos/themes/html/zobstar/employer-dashboard.html by HTTrack userssite Copier/3.x [XR&CO'2014], Thu, 22 Oct 2020 09:20:47 GMT -->
 
 </html>

@@ -1,30 +1,37 @@
-<script src="{{ asset('dashboard/vendors/jquery/dist/jquery.min.js') }}"></script>
-<script src="{{ asset('dashboard/vendors/popper.js/dist/umd/popper.min.js') }}"></script>
-<script src="{{ asset('dashboard/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('dashboard/assets/js/main.js') }}"></script>
+<script src="{{ asset('web2/js/jquery-3.4.1.min.js') }}"></script>
+<script src="{{ asset('web2/js/jquery-ui.js') }}"></script>
+<script src="{{ asset('web2/js/popper.min.js') }}"></script>
+<script src="{{ asset('web2/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('web2/js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('web2/js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ asset('web2/js/isotope-3.0.6.min.js') }}"></script>
+<script src="{{ asset('web2/js/select2.min.js') }}"></script>
+<script src="{{ asset('web2/js/chart.js') }}"></script>
+<script src="{{ asset('web2/js/line-chart.js') }}"></script>
+<script src="{{ asset('web2/js/doughutchart.js') }}"></script>
+<script src="{{ asset('web2/js/moment.min.js') }}"></script>
+<script src="{{ asset('web2/js/daterangepicker.js') }}"></script>
+<script src="{{ asset('web2/js/purecounter.js') }}"></script>
+<script src="{{ asset('web2/js/jquery.filer.min.js') }}"></script>
+<script src="{{ asset('web2/js/jquery-nice-select.js') }}"></script>
+<script src="{{ asset('web2/js/smooth-scrolling.js') }}"></script>
+<script src="{{ asset('web2/js/progresscircle.js') }}"></script>
+<script src="{{ asset('web2/js/main.js') }}"></script>
 
-
-<script src="{{ asset('dashboard/vendors/chart.js/dist/Chart.bundle.min.js') }}"></script>
-<script src="{{ asset('dashboard/assets/js/dashboard.js') }}"></script>
-<script src="{{ asset('dashboard/assets/js/widgets.js') }}"></script>
-<script src="{{ asset('dashboard/vendors/jqvmap/dist/jquery.vmap.min.js') }}"></script>
-<script src="{{ asset('dashboard/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>
-<script src="{{ asset('dashboard/vendors/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
 <script>
-  (function($) {
-    "use strict";
+    (function($) {
+        "use strict"; //use of strict
+        $(function() {
+            $('select').niceSelect();
+        });
+    })(jQuery);
+</script>
 
-    jQuery('#vmap').vectorMap({
-      map: 'world_en',
-      backgroundColor: null,
-      color: '#ffffff',
-      hoverOpacity: 0.7,
-      selectedColor: '#1de9b6',
-      enableZoom: true,
-      showTooltip: true,
-      values: sample_data,
-      scaleColors: ['#1de9b6', '#03a9f5'],
-      normalizeFunction: 'polynomial'
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable({
+            "scrollX": true
+        });
     });
-  })(jQuery);
 </script>
