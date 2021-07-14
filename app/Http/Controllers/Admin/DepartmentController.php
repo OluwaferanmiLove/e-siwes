@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Department;
 use App\Models\Faculties;
 use App\Models\Level;
+use App\Models\Schools;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -27,12 +28,12 @@ class DepartmentController extends Controller
         if ($_POST) {
             if ($request->id) {
                 $rules = array(
-                    'name' => ['required', 'max:255'],
-                    'faculty_id' => ['required', 'max:255']
+                    'name' => ['required', 'max:255', 'unique:departments,name,' . $request->id],
+                    'school_id' => ['required', 'max:255']
                 );
                 $fieldNames = array(
                     'name'   => 'Department Name',
-                    'faculty_id'   => 'Faculty',
+                    'school_id'   => 'School Name',
                 );
                 $validator = Validator::make($request->all(), $rules);
                 $validator->setAttributeNames($fieldNames);
@@ -43,7 +44,7 @@ class DepartmentController extends Controller
                     try {
                         $faculty = Department::find($request->id);
                         $faculty->name = $request->name;
-                        $faculty->faculty_id = $request->faculty_id;
+                        $faculty->school_id = $request->school_id;
                         $faculty->save();
                         Session::flash('success', 'Department Updated Successfully');
                         return redirect('admin/departments');
@@ -54,12 +55,12 @@ class DepartmentController extends Controller
                 }
             } else {
                 $rules = array(
-                    'name' => ['required', 'max:255'],
-                    'faculty_id' => ['required', 'max:255']
+                    'name' => ['required', 'max:255', 'unique:departments'],
+                    'school_id' => ['required', 'max:255']
                 );
                 $fieldNames = array(
                     'name'   => 'Department Name',
-                    'faculty_id'   => 'Faculty',
+                    'school_id'   => 'School Name',
                 );
                 //dd($request->all());
                 $validator = Validator::make($request->all(), $rules);
@@ -70,7 +71,7 @@ class DepartmentController extends Controller
                 } else {
                     try {
                         try {
-                            $check = Department::where(['name' => $request->name, 'faculty_id' => $request->faculty_id])->count();
+                            $check = Department::where(['name' => $request->name, 'school_id' => $request->school_id])->count();
                             if ($check > 0) {
                                 Session::flash('error', 'Department Name has already been created');
                                 return \back();
@@ -95,8 +96,8 @@ class DepartmentController extends Controller
                 }
             }
         } else {
-            $data['departments'] = Department::with('faculty:id,name,code')->withCount('course')->orderBy('id', 'ASC')->get();
-            $data['faculties'] = Faculties::orderBy('id', 'ASC')->get();
+            $data['departments'] = Department::with('school:id,name')->orderBy('id', 'ASC')->get();
+            $data['schools'] = Schools::orderBy('id', 'ASC')->get();
             $data['title'] = 'Departments';
             $data['sn'] = 1;
             $data['mode'] = 'index';
@@ -108,7 +109,7 @@ class DepartmentController extends Controller
     {
         try {
             $data['department'] = $d = Department::where(['id' => $id])->first();
-            $data['faculties'] = Faculties::orderBy('id', 'ASC')->get();
+            $data['schools'] = Schools::orderBy('id', 'ASC')->get();
             $data['title'] = 'Edit Department ' . $d->name;
             $data['sn'] = 1;
             $data['mode'] = 'edit';
@@ -119,14 +120,13 @@ class DepartmentController extends Controller
         }
     }
 
-    public function level($id)
+    public function view($id)
     {
         try {
             $data['department'] = $d = Department::where(['id' => $id])->first();
-            $data['levels'] = Level::orderBy('level', 'ASC')->get();
             $data['title'] = 'View Department ' . $d->name . 'Levels';
             $data['sn'] = 1;
-            return view('admin.departments.level', $data);
+            return view('admin.departments.view', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return \back();
@@ -156,8 +156,8 @@ class DepartmentController extends Controller
     public function create_new()
     {
         try {
-            $data['departments'] = Department::with('faculty:id,name,code')->orderBy('id', 'ASC')->get();
-            $data['faculties'] = Faculties::orderBy('id', 'ASC')->get();
+            $data['departments'] = Department::with('school:id,name,code')->orderBy('id', 'ASC')->get();
+            $data['schools'] = Schools::orderBy('id', 'ASC')->get();
             $data['title'] = 'Departments';
             $data['sn'] = 1;
             $data['mode'] = 'create';

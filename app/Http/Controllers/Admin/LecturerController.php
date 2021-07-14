@@ -14,6 +14,7 @@ use App\Models\Result;
 use App\Models\Department;
 use App\Models\Faculties;
 use App\Models\Level;
+use App\Models\Schools;
 use App\Models\Semester;
 
 class LecturerController extends Controller
@@ -130,12 +131,8 @@ class LecturerController extends Controller
         } else {
             $data['title'] = 'Add New Lecturer';
             $data['sn'] = 1;
-            $data['faculties'] = Faculties::orderBy('name', 'ASC')->get();
+            $data['faculties'] = Schools::orderBy('name', 'ASC')->get();
             $data['departments'] = Department::orderBy('name', 'ASC')->get();
-            $data['levels'] = Level::orderBy('id', 'ASC')->get();
-            $data['courses'] = Course::orderBy('id', 'ASC')->get();
-            $data['semesters'] = Semester::orderBy('id', 'ASC')->get();
-            $data['classes'] = Classes::all()->groupBy('class_id');
             return view('admin.lecturer.create', $data);
         }
     }

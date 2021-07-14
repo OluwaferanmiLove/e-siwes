@@ -65,19 +65,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::get('/assignments', [\App\Http\Controllers\Admin\SettingController::class, 'assignment']);
     Route::get('delete-assignment/{id}', [\App\Http\Controllers\Admin\SettingController::class, 'delete_assignment']);
 
-    //Faculties
-    Route::match(['get', 'post'], '/faculties', [App\Http\Controllers\Admin\FacultyController::class, 'create'])->name('admin_create_faculty');
-    Route::get('/create-faculty', [App\Http\Controllers\Admin\FacultyController::class, 'create_new']);
-    Route::get('/edit-faculty/{id}', [App\Http\Controllers\Admin\FacultyController::class, 'edit']);
-    Route::get('/view-faculty/{id}', [App\Http\Controllers\Admin\FacultyController::class, 'view']);
-    Route::get('/delete-faculty/{id}', [App\Http\Controllers\Admin\FacultyController::class, 'delete']);
+    //Schools
+    Route::match(['get', 'post'], '/schools', [App\Http\Controllers\Admin\SchoolsController::class, 'create'])->name('admin_create_school');
+    Route::get('/create-school', [App\Http\Controllers\Admin\SchoolsController::class, 'create_new']);
+    Route::get('/edit-school/{id}', [App\Http\Controllers\Admin\SchoolsController::class, 'edit']);
+    Route::get('/view-school/{id}', [App\Http\Controllers\Admin\SchoolsController::class, 'view']);
+    Route::get('/delete-school/{id}', [App\Http\Controllers\Admin\SchoolsController::class, 'delete']);
 
     //Departments
     Route::match(['get', 'post'], '/departments', [App\Http\Controllers\Admin\DepartmentController::class, 'create'])->name('admin_create_department');
     Route::get('/create-department', [App\Http\Controllers\Admin\DepartmentController::class, 'create_new']);
     Route::get('/edit-department/{id}', [App\Http\Controllers\Admin\DepartmentController::class, 'edit']);
     Route::get('/delete-department/{id}', [App\Http\Controllers\Admin\DepartmentController::class, 'delete']);
-    Route::get('/view-department-level/{id}', [App\Http\Controllers\Admin\DepartmentController::class, 'level']);
+    Route::get('/view-department/{id}', [App\Http\Controllers\Admin\DepartmentController::class, 'view']);
     Route::get('/view-dept-level/{faculty}/{id}/{level}', [App\Http\Controllers\Admin\DepartmentController::class, 'dept_level']);
 
 

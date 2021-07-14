@@ -3055,7 +3055,7 @@ body {
 .contact-form-action .form-control {
     height: auto;
     line-height: inherit;
-    padding: 15px 20px 15px 40px;
+    padding: 15px 20px 15px 15px;
     font-size: 13px;
     color: #2c2c51;
     border: 1px solid rgba(128, 137, 150, 0.3);

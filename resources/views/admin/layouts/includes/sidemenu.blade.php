@@ -14,15 +14,15 @@
 
 
 
-                <li class="{{ request()->is('admin/faculties*') || request()->is('admin/view-faculty*') || request()->is('admin/edit-faculty*') || request()->is('admin/create-faculty')  ? 'page-active' : '' }}">
+                <li class="{{ request()->is('admin/schools*') || request()->is('admin/view-school*') || request()->is('admin/edit-school*') || request()->is('admin/create-school')  ? 'page-active' : '' }}">
                     <a href="#"><i class="la la-book icon-element"></i> Schools <span class="la la-caret-down btn-toggle"></span></a>
                     <ul class="dropdown-menu-item">
-                        <li><a href="{{ url('admin/faculties') }}"> All Schools</a></li>
-                        <li><a href="{{ url('admin/create-faculty') }}"> Add New School</a></li>
+                        <li><a href="{{ url('admin/schools') }}"> All Schools</a></li>
+                        <li><a href="{{ url('admin/create-school') }}"> Add New School</a></li>
                     </ul>
                 </li>
 
-                <li class="{{ request()->is('admin/departments') || request()->is('admin/create-department') || request()->is('admin/edit-department*') || request()->is('admin/view-dept-level*') || request()->is('admin/view-department-level*') || request()->is('admin/edit-department*')  ? 'page-active' : '' }}">
+                <li class="{{ request()->is('admin/departments') || request()->is('admin/create-department') || request()->is('admin/edit-department*') || request()->is('admin/view-dept-level*') || request()->is('admin/view-department*') || request()->is('admin/edit-department*')  ? 'page-active' : '' }}">
                     <a href="#"><i class="la la-book icon-element"></i> Departments <span class="la la-caret-down btn-toggle"></span></a>
                     <ul class="dropdown-menu-item">
                         <li><a href="{{ url('admin/departments') }}"> All Departments</a></li>
