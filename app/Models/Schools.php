@@ -20,4 +20,10 @@ class Schools extends Model
     {
         return $this->hasOne(Department::class, 'school_id');
     }
+
+    
+    public function user()
+    {
+        return $this->hasOne(User::class, 'school_id');
+    }
 }

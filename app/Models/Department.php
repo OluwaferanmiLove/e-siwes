@@ -18,5 +18,10 @@ class Department extends Model
     public function school()
     {
         return $this->belongsTo(Schools::class, 'school_id');
+    }    
+    
+    public function user()
+    {
+        return $this->hasOne(User::class, 'department_id');
     }
 }

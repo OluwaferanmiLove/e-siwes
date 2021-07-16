@@ -84,20 +84,21 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     //Courses
     Route::match(['get', 'post'], '/courses', [App\Http\Controllers\Admin\CoursesController::class, 'create'])->name('admin_create_course');
     Route::get('/create-course', [App\Http\Controllers\Admin\CoursesController::class, 'create_page']);
-    Route::post('/fetch-dept', [App\Http\Controllers\Admin\CoursesController::class, 'dept']);
+    Route::post('/fetch-dept2', [App\Http\Controllers\Admin\CoursesController::class, 'dept']);
     Route::get('/edit-course/{id}', [App\Http\Controllers\Admin\CoursesController::class, 'edit']);
     Route::get('/view-course/{faculty_id}/{dept_id}/{level_id}/{semester_id}/{course_id}', [App\Http\Controllers\Admin\CoursesController::class, 'view']);
     Route::get('/delete-course/{id}', [App\Http\Controllers\Admin\CoursesController::class, 'delete']);
 
-    //Lecturer
-    Route::get('lecturers', [App\Http\Controllers\Admin\LecturerController::class, 'index']);
-    Route::match(['get', 'post'], '/add-lecturer', [App\Http\Controllers\Admin\LecturerController::class, 'create'])->name('admin_create_lecturer');
-    Route::get('/view-lecturer/{id}', [App\Http\Controllers\Admin\LecturerController::class, 'view']);
-    Route::get('/edit-lecturer/{id}', [App\Http\Controllers\Admin\LecturerController::class, 'edit']);
-    Route::get('/delete-lecturer/{id}', [App\Http\Controllers\Admin\LecturerController::class, 'delete']);
-    Route::get('/block-lecturer/{id}', [App\Http\Controllers\Admin\LecturerController::class, 'block']);
-    Route::get('/unblock-lecturer/{id}', [App\Http\Controllers\Admin\LecturerController::class, 'unblock']);
-    Route::post('/fetch-course', [App\Http\Controllers\Admin\LecturerController::class, 'course']);
+    //Supervisor
+    Route::get('supervisors', [App\Http\Controllers\Admin\SupervisorController::class, 'index']);
+    Route::match(['get', 'post'], '/add-supervisor', [App\Http\Controllers\Admin\SupervisorController::class, 'create'])->name('admin_create_supervisor');
+    Route::get('/view-supervisor/{id}', [App\Http\Controllers\Admin\SupervisorController::class, 'view']);
+    Route::get('/edit-supervisor/{id}', [App\Http\Controllers\Admin\SupervisorController::class, 'edit']);
+    Route::post('/fetch-dept', [App\Http\Controllers\Admin\SupervisorController::class, 'dept']);
+    Route::get('/delete-supervisor/{id}', [App\Http\Controllers\Admin\SupervisorController::class, 'delete']);
+    Route::get('/block-supervisor/{id}', [App\Http\Controllers\Admin\SupervisorController::class, 'block']);
+    Route::get('/unblock-supervisor/{id}', [App\Http\Controllers\Admin\SupervisorController::class, 'unblock']);
+    Route::post('/fetch-course', [App\Http\Controllers\Admin\SupervisorController::class, 'course']);
 
     //Student
     Route::get('students', [App\Http\Controllers\Admin\StudentController::class, 'index']);

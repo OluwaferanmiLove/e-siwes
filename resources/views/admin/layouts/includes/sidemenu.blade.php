@@ -29,11 +29,11 @@
                         <li><a href="{{ url('admin/create-department') }}"> Add New Department</a></li>
                     </ul>
                 </li>
-                <li class="{{ request()->is('admin/lecturers*') || request()->is('admin/add-lecturer*') || request()->is('admin/edit-lecturer*') || request()->is('admin/view-lecturer*')  ? 'page-active' : '' }}">
+                <li class="{{ request()->is('admin/supervisors*') || request()->is('admin/add-supervisor*') || request()->is('admin/edit-supervisor*') || request()->is('admin/view-supervisor*')  ? 'page-active' : '' }}">
                     <a href="#"><i class="la la-user icon-element"></i> Supervisors <span class="la la-caret-down btn-toggle"></span></a>
                     <ul class="dropdown-menu-item">
-                        <li><a href="{{ url('admin/lecturers') }}"> All Supervisors</a></li>
-                        <li><a href="{{ url('admin/add-lecturer') }}"> Add New Supervisor</a></li>
+                        <li><a href="{{ url('admin/supervisors') }}"> All Supervisors</a></li>
+                        <li><a href="{{ url('admin/add-supervisor') }}"> Add New Supervisor</a></li>
                     </ul>
                 </li>
 

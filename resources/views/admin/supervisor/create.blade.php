@@ -43,20 +43,20 @@
 									</div><!-- billing-title-wrap -->
 									<div class="billing-content">
 										<div class="contact-form-action mb-4">
-											<form class="edit-profile m-b30" id="" method="POST" action="{{ route('admin_create_lecturer') }}">
+											<form class="edit-profile m-b30" id="" method="POST" action="{{ route('admin_create_supervisor') }}">
 												@csrf
 												<div class="">
-													<!--Select Faculty -->
+													<!--Select school -->
 													<div class="form-group row mb-4">
-														<label class="col-sm-2 col-form-label">Select Faculty</label>
+														<label class="col-sm-2 col-form-label">Select School</label>
 														<div class="col-sm-10">
-															<select class="form-control school-option-field" id="faculty" name="faculty_id" onchange="getDeptSingle(this)">
+															<select class="form-control school-option-field" id="school" name="school_id" onchange="getDeptSingle(this)">
 																<option value="">Open this select menu</option>
-																@foreach ($faculties as $faculty)
-																<option class="text-capitalize" {{ old('faculty_id') == $faculty->id ? "selected" : "" }} value="{{$faculty->id}}">{{$faculty->name}} ({{$faculty->code}})</option>
+																@foreach ($schools as $school)
+																<option class="text-capitalize" {{ old('school_id') == $school->id ? "selected" : "" }} value="{{$school->id}}">{{$school->name}}</option>
 																@endforeach
 															</select>
-															@error('faculty_id')
+															@error('school_id')
 															<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																<strong>{{ $message }}</strong>
 															</span>
@@ -81,7 +81,7 @@
 														</div>
 													</div>
 													<div class="form-group row mb-4">
-														<label class="col-sm-2 col-form-label">Supervisor Email</label>
+														<label class="col-sm-2 col-form-label">Email</label>
 														<div class="col-sm-10">
 															<input class="form-control @error('email') is-invalid @enderror" name="email" type="email" value="{{ old('email') }}" placeholder="Supervisor Email">
 															@error('email')
@@ -92,10 +92,10 @@
 														</div>
 													</div>
 													<div class="form-group row mb-4">
-														<label class="col-sm-2 col-form-label">First Name</label>
+														<label class="col-sm-2 col-form-label">Name</label>
 														<div class="col-sm-10">
-															<input class="form-control @error('first_name') is-invalid @enderror" name="first_name" type="text" value="{{ old('first_name') }}" placeholder="Supervisor First Name">
-															@error('first_name')
+															<input class="form-control @error('name') is-invalid @enderror" name="name" type="text" value="{{ old('name') }}" placeholder="Supervisor Name">
+															@error('name')
 															<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																<strong>{{ $message }}</strong>
 															</span>
@@ -103,10 +103,10 @@
 														</div>
 													</div>
 													<div class="form-group row mb-4">
-														<label class="col-sm-2 col-form-label">Last Name</label>
+														<label class="col-sm-2 col-form-label">Password</label>
 														<div class="col-sm-10">
-															<input class="form-control @error('last_name') is-invalid @enderror" name="last_name" type="text" value="{{ old('last_name') }}" placeholder="Supervisor Last Name">
-															@error('last_name')
+															<input class="form-control @error('password') is-invalid @enderror" name="password" type="password" value="{{ old('password') }}" placeholder="Supervisor Password">
+															@error('password')
 															<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																<strong>{{ $message }}</strong>
 															</span>
@@ -115,7 +115,7 @@
 													</div>
 													<div class="form-group row">
 														<div class="col-sm-10  ml-auto">
-															<h6>Note: Supervisor First Name is password by default in lowercase<br>
+															<!-- <h6>Note: Supervisor First Name is password by default in lowercase<br> -->
 															</h6>
 														</div>
 													</div>
@@ -148,30 +148,9 @@
 	</div><!-- end row -->
 </div>
 <script>
-	$("#courses_single").attr('disabled', true);
-	$(document).ready(function() {
-		$('#faculty').on('change', function() {
-			check()
-		});
-
-		$('#department_single').on('change', function() {
-			check()
-		});
-
-		$('#level_single').on('change', function() {
-			check()
-		});
-
-		$('#semester_id').on('change', function() {
-			check()
-		});
-
-
-	});
-
 	function getDeptSingle(sel) {
 		$.ajax({
-			type: "POST",
+			type: "post",
 			url: "{{ url('admin/fetch-dept') }}",
 			data: {
 				"_token": "{{ csrf_token() }}",
@@ -186,39 +165,6 @@
 				});
 			}
 		});
-	}
-
-	function check() {
-		var faculty = $("#faculty option:selected").val();
-		var department = $("#department_single option:selected").val();
-		var level = $("#level_single option:selected").val();
-		var semester = $("#semester_id option:selected").val();
-		if (faculty != "" && department != "" && level != "" && semester != "") {
-			$("#courses_single").attr('disabled', false);
-			$("#courses_single").attr('disabled', false);
-			$.ajax({
-				type: "POST",
-				url: "{{ url('admin/fetch-course') }}",
-				data: {
-					"_token": "{{ csrf_token() }}",
-					"faculty_id": faculty,
-					"department_id": department,
-					"level_id": level,
-					"semester_id": semester
-				},
-				success: function(response) {
-					console.log(response)
-					$("#courses_single").attr('disabled', false);
-					$("#courses_single").find('option').remove();
-					$.each(response, function(key, value) {
-						$("#courses_single").append('<option class="text-capitalize" value=' + value.id + '>' + value.course_title + ' (' + value.course_code + ')' + '</option>');
-					});
-				}
-			});
-		} else {
-			$("#courses_single").attr('disabled', true);
-			return false;
-		}
 	}
 </script>
 @endsection
