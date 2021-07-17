@@ -41,9 +41,9 @@ class StudentController extends Controller
                 $rules = array(
                     'school_id' => ['required', 'max:255'],
                     'department_id' => ['required', 'max:255'],
+                    'name' => ['required', 'max:255'],
                     'matric_number' => ['required', 'max:255', 'unique:users,unique,' . $request->id],
                     'email' => ['required', 'max:255', 'unique:users,email,' . $request->id],
-                    'name' => ['required', 'max:255'],
                 );
                 $fieldNames = array(
                     'school_id'   => 'Student School',
@@ -62,12 +62,10 @@ class StudentController extends Controller
                     try {
                         $user = User::find($request->id);
                         $user->email = $request->email;
-                        $user->matric_number = $request->matric_number;
-                        $user->first_name = $request->first_name;
-                        $user->last_name = $request->last_name;
-                        $user->faculty_id = $request->faculty_id;
-                        $user->dept_id = $request->department_id;
-                        $user->level_id = $request->level_id;
+                        $user->unique = $request->matric_number;
+                        $user->name = $request->name;
+                        $user->school_id = $request->school_id;
+                        $user->department_id = $request->department_id;
                         $user->save();
                         // $this->check_student();
                         Session::flash('success', 'Student Updated Successfully');
@@ -191,9 +189,9 @@ class StudentController extends Controller
     {
         try {
             $check = User::where(['id' => $id, 'role' => 'Student', 'status' => 'Active'])->first();
-            $check->status = 'Blocked';
+            $check->status = 'Inactive';
             $check->save();
-            Session::flash('success', 'Student Blocked Successfully');
+            Session::flash('success', 'Student Inactive Successfully');
             return \back();
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
@@ -204,7 +202,7 @@ class StudentController extends Controller
     public function unblock($id)
     {
         try {
-            $check = User::where(['id' => $id, 'role' => 'Student', 'status' => 'Blocked'])->first();
+            $check = User::where(['id' => $id, 'role' => 'Student', 'status' => 'Inactive'])->first();
             $check->status = 'Active';
             $check->save();
             Session::flash('success', 'Student Unblocked Successfully');
