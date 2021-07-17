@@ -34,27 +34,18 @@ class SupervisorController extends Controller
     {
         if ($_POST) {
             if ($request->id) {
+
                 $rules = array(
-                    'faculty_id' => ['required', 'max:255'],
                     'department_id' => ['required', 'max:255'],
-                    'level_id' => ['required', 'max:255'],
-                    'course_id' => ['required', 'max:255'],
-                    'semester_id' => ['required', 'max:255'],
-                    'lecturer_id' => ['required', 'max:255', 'unique:users,matric_number,' . $request->id],
-                    'first_name' => ['required', 'max:255'],
-                    'last_name' => ['required', 'max:255'],
+                    'school_id' => ['required', 'max:255'],
+                    'name' => ['required', 'max:255'],
                     'email' => ['required', 'max:255', 'email', 'unique:users,email,' . $request->id],
                 );
                 $fieldNames = array(
-                    'faculty_id'   => 'Lecturer Faculty',
-                    'department_id' => 'Lecturer Department',
-                    'course_id' => 'Lecturer Course',
-                    'level_id' => 'Level',
-                    'semester_id' => 'Semester',
-                    'lecturer_id'   => 'Lecturer ID',
-                    'first_name'   => 'Lecturer First Name',
-                    'last_name' => 'Lecturer Last Name',
-                    'email' => 'Lecturer Email'
+                    'school_id'   => 'Supervisor School',
+                    'department_id' => 'Supervisor Department',
+                    'name'   => 'Supervisor Name',
+                    'email' => 'Supervisor Email',
                 );
                 //dd($request->all());
                 $validator = Validator::make($request->all(), $rules);
@@ -66,16 +57,12 @@ class SupervisorController extends Controller
                     try {
                         $user = User::find($request->id);
                         $user->email = $request->email;
-                        $user->matric_number = $request->lecturer_id;
-                        $user->first_name = $request->first_name;
-                        $user->last_name = $request->last_name;
-                        $user->faculty_id = $request->faculty_id;
-                        $user->dept_id = $request->department_id;
-                        $user->level_id = $request->level_id;
-                        $user->course_id = $request->course_id;
+                        $user->name = $request->name;
+                        $user->school_id = $request->school_id;
+                        $user->department_id = $request->department_id;
                         $user->save();
                         // $this->check_student();
-                        Session::flash('success', 'Lecturer Updated Successfully');
+                        Session::flash('success', 'Supervisor Updated Successfully');
                         return redirect('admin/supervisors');
                     } catch (\Throwable $th) {
                         Session::flash('error', $th->getMessage());
@@ -166,7 +153,7 @@ class SupervisorController extends Controller
             $data['title'] = 'Edit Lecturer';
             $data['sn'] = 1;
             $data['mode'] = 'edit';
-            return view('admin.lecturer.edit', $data);
+            return view('admin.supervisor.edit', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
             return \back();
@@ -177,9 +164,9 @@ class SupervisorController extends Controller
     {
         try {
             $check = User::where(['id' => $id, 'role' => 'Supervisor', 'status' => 'Active'])->first();
-            $check->status = 'Blocked';
+            $check->status = 'Inactive';
             $check->save();
-            Session::flash('success', 'Supervisor Blocked Successfully');
+            Session::flash('success', 'Supervisor Inactive Successfully');
             return \back();
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());
@@ -190,7 +177,7 @@ class SupervisorController extends Controller
     public function unblock($id)
     {
         try {
-            $check = User::where(['id' => $id, 'role' => 'Supervisor', 'status' => 'Blocked'])->first();
+            $check = User::where(['id' => $id, 'role' => 'Supervisor', 'status' => 'Inactive'])->first();
             $check->status = 'Active';
             $check->save();
             Session::flash('success', 'Supervisor Unblocked Successfully');

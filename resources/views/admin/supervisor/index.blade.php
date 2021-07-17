@@ -48,9 +48,8 @@
                   <th>Supervisor Email</th>
                   <th>Supervisor Name</th>
                   <th>Status</th>
-                  <th>Faculty</th>
+                  <th>School</th>
                   <th>Department</th>
-                  <th>Course Taken</th>
                   <th class="">Action</th>
                 </tr>
               </thead>
@@ -61,13 +60,13 @@
                   <td>
                     <div class="manage-candidate-wrap">
                       <h2 class="widget-title pb-0 font-size-15">
-                        <b>{{$supervisor->matric_number}}</b>
+                        <b>{{$supervisor->email}}</b>
                       </h2>
                     </div><!-- end manage-candidate-wrap -->
                   </td>
                   <td class="text-capitalize">
                     <div class="manage-candidate-wrap">
-                      <h2 class="widget-title pb-0 font-size-15"><b><a class="text-success" href="{{ url('admin/view-lecturer', $supervisor->id) }}">{{$supervisor->first_name}} {{$supervisor->last_name}}</a></b></h2>
+                      <h2 class="widget-title pb-0 font-size-15"><b><a class="text-success" href="{{ url('admin/view-lecturer', $supervisor->id) }}">{{$supervisor->name}}</a></b></h2>
                     </div><!-- end manage-candidate-wrap -->
                   </td>
                   <td>
@@ -91,27 +90,21 @@
                   <td>
                     <div class="manage-candidate-wrap">
                       <h2 class="widget-title pb-0 font-size-15">
-                        <b>{{$supervisor->dept}}</b>
-                      </h2>
-                    </div><!-- end manage-candidate-wrap -->
-                  </td>
-                  <td>
-                    <div class="manage-candidate-wrap">
-                      <h2 class="widget-title pb-0 font-size-15">
+                        <b>{{$supervisor->dept->name}}</b>
                       </h2>
                     </div><!-- end manage-candidate-wrap -->
                   </td>
                   <td>
                     <!-- Example single danger button -->
                     <div class="btn-group" role="group" aria-label="Basic example">
-                      <a href="{{ url('admin/view-lecturer', $supervisor->id) }}" title="View lecturer" class="btn btn-success m-1"><i class="la la-eye" data-toggle="tooltip" data-placement="top"></i></a>
+                      <a href="{{ url('admin/view-supervisor', $supervisor->id) }}" title="View supervisor" class="btn btn-success m-1"><i class="la la-eye" data-toggle="tooltip" data-placement="top"></i></a>
                       @if ($supervisor->status == 'Active')
-                      <a href="{{ url('admin/block-lecturer', $supervisor->id) }}" title="Deny Access" onclick="return confirm('Are you sure you want to Deny Access for this Lecturer?')" class="btn btn-danger m-1"><i class="la la-lock" data-toggle="tooltip" data-placement="top"></i></a>
+                      <a href="{{ url('admin/block-supervisor', $supervisor->id) }}" title="Deny Access" onclick="return confirm('Are you sure you want to Deny Access for this supervisor?')" class="btn btn-danger m-1"><i class="la la-lock" data-toggle="tooltip" data-placement="top"></i></a>
                       @else
-                      <a href="{{ url('admin/unblock-lecturer', $supervisor->id) }}" title="Grant Access" onclick="return confirm('Are you sure you want to  Grant this lecturer Access?')" class="btn btn-success m-1"><i class="la la-unlock" data-toggle="tooltip" data-placement="top"></i></a>
+                      <a href="{{ url('admin/unblock-supervisor', $supervisor->id) }}" title="Grant Access" onclick="return confirm('Are you sure you want to  Grant this supervisor Access?')" class="btn btn-success m-1"><i class="la la-unlock" data-toggle="tooltip" data-placement="top"></i></a>
                       @endif
-                      <a href="{{ url('admin/edit-lecturer', $supervisor->id) }}" title="Edit lecturer" class="btn btn-dark m-1"><i class="la la-pencil" data-toggle="tooltip" data-placement="top"></i></a>
-                      <a href="{{ url('admin/delete-lecturer', $supervisor->id) }}" title="Delete lecturer" class="btn btn-danger m-1" onclick="return confirm('Are you sure you want to delete this Lecturer?')"><i class="la la-trash" data-toggle="tooltip" data-placement="top"></i></a>
+                      <a href="{{ url('admin/edit-supervisor', $supervisor->id) }}" title="Edit supervisor" class="btn btn-dark m-1"><i class="la la-pencil" data-toggle="tooltip" data-placement="top"></i></a>
+                      <a href="{{ url('admin/delete-supervisor', $supervisor->id) }}" title="Delete supervisor" class="btn btn-danger m-1" onclick="return confirm('Are you sure you want to delete this supervisor?')"><i class="la la-trash" data-toggle="tooltip" data-placement="top"></i></a>
                     </div>
                   </td>
                 </tr>

@@ -46,7 +46,7 @@
                                 <th>Matric Number</th>
                                 <th>Student Name</th>
                                 <th>Status</th>
-                                <th>Faculty</th>
+                                <th>School</th>
                                 <th>Department</th>
                                 <th class="">Action</th>
                               </tr>
@@ -58,13 +58,13 @@
                                 <td>                                    
                                   <div class="manage-candidate-wrap">
                                     <h2 class="widget-title pb-0 font-size-15">
-                                      <b>{{$student->matric_number}}</b>
+                                      <b>{{$student->unique}}</b>
                                     </h2>
                                   </div><!-- end manage-candidate-wrap -->
                                 </td>
                                 <td class="text-capitalize">
                                   <div class="manage-candidate-wrap">
-                                    <h2 class="widget-title pb-0 font-size-15"><b><a class="text-success" href="{{ url('admin/view-student', $student->id) }}">{{$student->first_name}} {{$student->last_name}}</a></b></h2>
+                                    <h2 class="widget-title pb-0 font-size-15"><b><a class="text-success" href="{{ url('admin/view-student', $student->id) }}">{{$student->name}}</a></b></h2>
                                   </div><!-- end manage-candidate-wrap -->
                                 </td>
                                 <td>                                    
@@ -81,7 +81,7 @@
                                 <td> 
                                   <div class="manage-candidate-wrap">
                                     <h2 class="widget-title pb-0 font-size-15">
-                                      <b>{{$student->faculty->name}}</b>
+                                      <b>{{$student->school->name}}</b>
                                     </h2>
                                   </div><!-- end manage-candidate-wrap -->
                                 </td>

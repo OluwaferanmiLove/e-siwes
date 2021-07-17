@@ -57,6 +57,21 @@ class User extends Authenticatable
         $save->password = Hash::make($data['password']);
         $save->save();
     }
+    
+    
+    public function create_student($data)
+    {
+        $save = new self;
+        $save->unique = $data['matric_number'];
+        $save->email = $data['email'];
+        $save->name = $data['name'];
+        $save->school_id = $data['school_id'];
+        $save->department_id = $data['department_id'];
+        $save->role = 'Student';
+        $save->password = Hash::make(strtolower($data['matric_number']));
+        $save->save();
+    }
+    
 
     public function school()
     {

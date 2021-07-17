@@ -38,7 +38,7 @@
 										<div class="sidebar-widget">
 												<div class="billing-form-item">
 														<div class="billing-title-wrap">
-																<h3 class="widget-title">{{ $student->first_name }} {{ $student->last_name }} Details</h3>
+																<h3 class="widget-title">{{ $student->name }} Details</h3>
 																<div class="title-shape"></div>
 														</div><!-- billing-title-wrap -->
 														<div class="billing-content">														
@@ -51,15 +51,15 @@
 																		<div class="">
 																				<!--Select Faculty --> 
 																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">Select Faculty</label>
+																						<label class="col-sm-2 col-form-label">Select School</label>
 																						<div class="col-sm-10">
-																							<select class="form-control faculty-option-field" id="faculty" name="faculty_id" onchange="getDeptSingle(this)">
+																							<select class="form-control school-option-field" id="school" name="school_id" onchange="getDeptSingle(this)">
 																								<option value="">Open this select menu</option>
-																								@foreach ($faculties as $faculty)
-																								<option class="text-capitalize" @isset($student) {{ $student->faculty_id == $faculty->id ? "selected" : "" }} @else {{ old('faculty_id') == $faculty->id ? "selected" : "" }} @endisset value="{{$faculty->id}}">{{$faculty->name}} ({{$faculty->code}})</option>                                                
+																								@foreach ($schools as $school)
+																								<option class="text-capitalize" @isset($student) {{ $student->school_id == $school->id ? "selected" : "" }} @else {{ old('school_id') == $school->id ? "selected" : "" }} @endisset value="{{$school->id}}">{{$school->name}} ({{$school->code}})</option>                                                
 																								@endforeach
 																							</select>
-																							@error('faculty_id')
+																							@error('school_id')
 																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																									<strong>{{ $message }}</strong>
 																								</span>
@@ -73,27 +73,10 @@
 																							<select name="department_id" id="department_single" class="form-control department-option-field">
 																								<option value="">Open this select menu</option>
 																								@foreach ($departments as $department)
-																								<option class="text-capitalize" @isset($student) {{ $student->dept_id == $department->id ? "selected" : "" }} @else {{ old('department_id') == $department->id ? "selected" : "" }} @endisset value="{{$department->id}}">{{$department->name}}</option>                                                
+																								<option class="text-capitalize" @isset($student) {{ $student->department_id == $department->id ? "selected" : "" }} @else {{ old('department_id') == $department->id ? "selected" : "" }} @endisset value="{{$department->id}}">{{$department->name}}</option>                                                
 																								@endforeach
 																							</select>
 																							@error('department_id')
-																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
-																									<strong>{{ $message }}</strong>
-																								</span>
-																							@enderror
-																						</div>
-																				</div>	
-																				<!--Select Level --> 
-																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">Select Level</label>
-																						<div class="col-sm-10">
-																							<select class="form-control level-option-field" id="level_single" name="level_id">
-																								<option value="">Open this select menu</option>
-																								@foreach ($levels as $level)
-																								<option class="text-capitalize" @isset($student) {{ $student->level_id == $level->level ? "selected" : "" }} @else {{ old('level_id') == $level->level ? "selected" : "" }} @endisset  @isset($course) value="{{ $course->level }}" @else value="{{$level->level}}" @endisset >{{$level->name}}</option>                                                
-																								@endforeach
-																							</select>
-																							@error('level_id')
 																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																									<strong>{{ $message }}</strong>
 																								</span>
@@ -104,7 +87,7 @@
 																				<div class="form-group row mb-4">
 																						<label class="col-sm-2 col-form-label">Matric No.</label>
 																						<div class="col-sm-10">
-																							<input class="form-control @error('matric_number') is-invalid @enderror" name="matric_number" type="text" @isset($student) value="{{ $student->matric_number }}" @else value="{{ old('matric_number') }}" @endisset placeholder="Student Matic Number">
+																							<input class="form-control @error('matric_number') is-invalid @enderror" name="matric_number" type="text" @isset($student) value="{{ $student->unique }}" @else value="{{ old('matric_number') }}" @endisset placeholder="Student Matic Number">
 																							@error('matric_number')
 																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																									<strong>{{ $message }}</strong>
@@ -124,21 +107,10 @@
 																						</div>
 																				</div>	
 																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">First Name</label>
+																						<label class="col-sm-2 col-form-label">Name</label>
 																						<div class="col-sm-10">
-																							<input class="form-control @error('first_name') is-invalid @enderror" name="first_name" type="text" @isset($student) value="{{ $student->first_name }}" @else value="{{ old('first_name') }}" @endisset placeholder="Student First Name">
-																							@error('first_name')
-																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
-																									<strong>{{ $message }}</strong>
-																								</span>
-																							@enderror
-																						</div>
-																				</div>	
-																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">Last Name</label>
-																						<div class="col-sm-10">
-																							<input class="form-control @error('last_name') is-invalid @enderror" name="last_name" type="text" @isset($student) value="{{ $student->last_name }}" @else value="{{ old('last_name') }}" @endisset placeholder="Student Last Name">
-																							@error('last_name')
+																							<input class="form-control @error('name') is-invalid @enderror" name="name" type="text" @isset($student) value="{{ $student->name }}" @else value="{{ old('name') }}" @endisset placeholder="Student First Name">
+																							@error('name')
 																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																									<strong>{{ $message }}</strong>
 																								</span>

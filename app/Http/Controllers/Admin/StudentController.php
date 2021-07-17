@@ -13,6 +13,7 @@ use App\Models\Result;
 use App\Models\Department;
 use App\Models\Faculties;
 use App\Models\Level;
+use App\Models\Schools;
 use App\Models\Semester;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -23,14 +24,13 @@ class StudentController extends Controller
         $this->middleware('auth');
         $this->middleware('admin');
         $this->create_new = new User();
-        $this->create_new_result = new Result();
     }
 
     public function index()
     {
         $data['title'] = 'All Students';
         $data['sn'] = 1;
-        $data['students'] = User::where('role', 'Student')->with('faculty:id,name')->with('dept:id,name')->paginate(15);
+        $data['students'] = User::where('role', 'Student')->with('school:id,name')->with('dept:id,name')->paginate(15);
         return view('admin.students.index', $data);
     }
 
@@ -39,22 +39,18 @@ class StudentController extends Controller
         if ($_POST) {
             if ($request->id) {
                 $rules = array(
-                    'faculty_id' => ['required', 'max:255'],
+                    'school_id' => ['required', 'max:255'],
                     'department_id' => ['required', 'max:255'],
-                    'level_id' => ['required', 'max:255'],
-                    'matric_number' => ['required', 'max:255', 'unique:users,matric_number,' . $request->id],
+                    'matric_number' => ['required', 'max:255', 'unique:users,unique,' . $request->id],
                     'email' => ['required', 'max:255', 'unique:users,email,' . $request->id],
-                    'first_name' => ['required', 'max:255'],
-                    'last_name' => ['required', 'max:255'],
+                    'name' => ['required', 'max:255'],
                 );
                 $fieldNames = array(
-                    'faculty_id'   => 'Student Faculty',
+                    'school_id'   => 'Student School',
                     'department_id' => 'Student Department',
-                    'level_id'   => 'Student Level',
                     'matric_number' => 'Student Matric Number',
-                    'first_name'   => 'Student First Name',
-                    'last_name' => 'Student Last Name',
-                    'email' => 'Student Email',
+                    'name'   => 'Student Name',
+                    'email' => 'Student Email'
                 );
                 //dd($request->all());
                 $validator = Validator::make($request->all(), $rules);
@@ -83,21 +79,17 @@ class StudentController extends Controller
                 }
             } else {
                 $rules = array(
-                    'faculty_id' => ['required', 'max:255'],
+                    'school_id' => ['required', 'max:255'],
                     'department_id' => ['required', 'max:255'],
-                    'level_id' => ['required', 'max:255'],
-                    'matric_number' => ['required', 'max:255', 'unique:users,matric_number'],
-                    'first_name' => ['required', 'max:255'],
-                    'last_name' => ['required', 'max:255'],
+                    'matric_number' => ['required', 'max:255', 'unique:users,unique'],
+                    'name' => ['required', 'max:255'],
                     'email' => ['required', 'max:255', 'email', 'unique:users,email'],
                 );
                 $fieldNames = array(
-                    'faculty_id'   => 'Student Faculty',
+                    'school_id'   => 'Student School',
                     'department_id' => 'Student Department',
-                    'level_id'   => 'Student Level',
                     'matric_number' => 'Student Matric Number',
-                    'first_name'   => 'Student First Name',
-                    'last_name' => 'Student Last Name',
+                    'name'   => 'Student Name',
                     'email' => 'Student Email'
                 );
                 //dd($request->all());
@@ -122,10 +114,8 @@ class StudentController extends Controller
             $data['title'] = 'Create New Students';
             $data['sn'] = 1;
             $data['mode'] = 'create';
-            $data['faculties'] = Faculties::orderBy('name', 'ASC')->get();
+            $data['schools'] = Schools::orderBy('name', 'ASC')->get();
             $data['departments'] = Department::orderBy('name', 'ASC')->get();
-            $data['levels'] = Level::orderBy('id', 'ASC')->get();
-            $data['classes'] = Classes::all()->groupBy('class_id');
             return view('admin.students.create', $data);
         }
     }
@@ -134,13 +124,13 @@ class StudentController extends Controller
     public function create_bulk(Request $request)
     {
         $rules = array(
-            'bulk_faculty_id' => ['required', 'max:255'],
+            'bulk_school_id' => ['required', 'max:255'],
             'bulk_department_id' => ['required', 'max:255'],
             'bulk_level_id' => ['required', 'max:255'],
             'bulk_student' => ['required', 'mimes:csv,xlsx,xls'],
         );
         $fieldNames = array(
-            'bulk_faculty_id'   => 'Student Faculty',
+            'bulk_school_id'   => 'Student school',
             'bulk_department_id' => 'Student Department',
             'bulk_level_id'   => 'Student Level',
             'bulk_student'   => 'Student Bulk File',
@@ -153,13 +143,13 @@ class StudentController extends Controller
             return back()->withErrors($validator)->withInput();
         } else {
             try {
-                $request->session()->put('bulk_faculty_id', $request->bulk_faculty_id);
+                $request->session()->put('bulk_school_id', $request->bulk_school_id);
                 $request->session()->put('bulk_department_id', $request->bulk_department_id);
                 $request->session()->put('bulk_level_id', $request->bulk_level_id);
                 Excel::import(new UsersImport, request()->file('bulk_student'));
                 // $this->check_student();
                 Session::flash('success', 'Student Uploaded Successfully');
-                $request->session()->forget('bulk_faculty_id');
+                $request->session()->forget('bulk_school_id');
                 $request->session()->forget('bulk_department_id');
                 $request->session()->forget('bulk_level_id');
                 return redirect('admin/students');
@@ -175,10 +165,8 @@ class StudentController extends Controller
         try {
             $data['student'] = User::where(['id' => $id, 'role' => 'Student'])->first();
             $data['title'] = 'Edit Student';
-            $data['faculties'] = Faculties::orderBy('name', 'ASC')->get();
+            $data['schools'] = Schools::orderBy('name', 'ASC')->get();
             $data['departments'] = Department::orderBy('name', 'ASC')->get();
-            $data['levels'] = Level::orderBy('id', 'ASC')->get();
-            $data['classes'] = Classes::all()->groupBy('class_id');
             return view('admin.students.edit', $data);
         } catch (\Throwable $th) {
             Session::flash('error', $th->getMessage());

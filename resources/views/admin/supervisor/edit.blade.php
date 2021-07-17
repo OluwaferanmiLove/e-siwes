@@ -4,12 +4,12 @@
 	<div class="col-lg-12">
 			<div class="breadcrumb-content d-flex flex-wrap justify-content-between align-items-center">
 					<div class="section-heading">
-							<h2 class="sec__title">Add New Lecturer</h2>
+							<h2 class="sec__title">Add New Supervisor</h2>
 					</div><!-- end section-heading -->
 					<ul class="list-items d-flex align-items-center">
 							<li class="active__list-item"><a href="#">Home</a></li>
 							<li class="active__list-item"><a href="{{ url('admin') }}">Dashboard</a></li>
-							<li><a href="{{ url('admin/faculties') }}">Add New Lecturer</a></li>
+							<li><a href="{{ url('admin/faculties') }}">Add New Supervisor</a></li>
 					</ul>
 			</div><!-- end breadcrumb-content -->
 	</div><!-- end col-lg-12 -->
@@ -21,12 +21,12 @@
 					<div class="billing-title-wrap">
 						<div class="row">
 							<div class="col-10">
-								<h3 class="widget-title pb-0">Edit Lecturer</h3>
+								<h3 class="widget-title pb-0">Edit Supervisor</h3>
 								<div class="title-shape margin-top-10px"></div>	
 							</div>
 							<div class="col-2">						
 								<div class="text-right">
-									<a href="{{ url('admin/lecturers') }}" class="btn btn-success">All Lecturer</a>
+									<a href="{{ url('admin/supervisors') }}" class="btn btn-success">All Supervisor</a>
 								</div>
 							</div>
 						</div>
@@ -38,28 +38,28 @@
 										<div class="sidebar-widget">
 												<div class="billing-form-item">
 														<div class="billing-title-wrap">
-																<h3 class="widget-title">{{ $lecturer->first_name }} {{ $lecturer->last_name }}</h3>
+																<h3 class="widget-title">{{ $supervisor->name }}</h3>
 																<div class="title-shape"></div>
 														</div><!-- billing-title-wrap -->
 														<div class="billing-content">														
 															<div class="contact-form-action mb-4">
-																<form class="edit-profile m-b30" id="" method="POST" action="{{ route('admin_create_lecturer') }}">
+																<form class="edit-profile m-b30" id="" method="POST" action="{{ route('admin_create_supervisor') }}">
 																		@csrf
-                                    @isset($lecturer->id)
-                                      <input type="hidden" value="{{ $lecturer->id }}" name="id">
+                                    @isset($supervisor->id)
+                                      <input type="hidden" value="{{ $supervisor->id }}" name="id">
                                     @endisset
 																		<div class="">
 																				<!--Select Faculty --> 
 																				<div class="form-group row mb-4">
 																						<label class="col-sm-2 col-form-label">Select Faculty</label>
 																						<div class="col-sm-10">
-																							<select class="form-control faculty-option-field" id="faculty" name="faculty_id" onchange="getDeptSingle(this)">
+																							<select class="form-control school-option-field" id="school" name="school_id" onchange="getDeptSingle(this)">
 																								<option value="">Open this select menu</option>
-																								@foreach ($faculties as $faculty)
-																								<option class="text-capitalize" @isset($lecturer)  {{ $lecturer->faculty_id == $faculty->id ? "selected" : "" }} @else   {{ old('faculty_id') == $faculty->id ? "selected" : "" }} @endisset value="{{$faculty->id}}" >{{$faculty->name}} ({{$faculty->code}})</option>                                                
+																								@foreach ($schools as $school)
+																								<option class="text-capitalize" @isset($supervisor)  {{ $supervisor->school_id == $school->id ? "selected" : "" }} @else   {{ old('school_id') == $school->id ? "selected" : "" }} @endisset value="{{$school->id}}" >{{$school->name}} ({{$school->code}})</option>                                                
 																								@endforeach
 																							</select>
-																							@error('faculty_id')
+																							@error('school_id')
 																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																									<strong>{{ $message }}</strong>
 																								</span>
@@ -73,7 +73,7 @@
 																							<select name="department_id" id="department_single" class="form-control department-option-field">
 																								<option value="">Open this select menu</option>
 																								@foreach ($departments as $department)
-																								<option class="text-capitalize" @isset($lecturer) {{ $lecturer->dept_id == $department->id ? "selected" : "" }} @else {{ old('department_id') == $department->id ? "selected" : "" }} @endisset value="{{$department->id}}" >{{$department->name}}</option>                                                
+																								<option class="text-capitalize" @isset($supervisor) {{ $supervisor->department_id == $department->id ? "selected" : "" }} @else {{ old('department_id') == $department->id ? "selected" : "" }} @endisset value="{{$department->id}}" >{{$department->name}}</option>                                                
 																								@endforeach
 																							</select>
 																							@error('department_id')
@@ -83,94 +83,22 @@
 																							@enderror
 																						</div>
 																				</div>	
-																				<!--Select Level --> 
-																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">Select Level</label>
-																						<div class="col-sm-10">
-																							<select class="form-control level-option-field" id="level_single" name="level_id">
-																								<option value="">Open this select menu</option>
-																								@foreach ($levels as $level)
-																								<option class="text-capitalize" @isset($lecturer) {{ $lecturer->level_id == $level->level ? "selected" : "" }} @else {{ old('level_id') == $level->level ? "selected" : "" }} @endisset value="{{$level->level}}" >{{$level->name}}</option>                                                
-																								@endforeach
-																							</select>
-																							@error('level_id')
-																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
-																									<strong>{{ $message }}</strong>
-																								</span>
-																							@enderror
-																						</div>
-																				</div>	
-																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">Select Semester</label>
-																						<div class="col-sm-10">
-																							<select class="form-control semester-option-field" id="semester_id" name="semester_id">
-																								<option value="">Open this select menu</option>
-																								@foreach ($semesters as $semester)
-																								<option class="text-capitalize" @isset($lecturer) {{ $lecturer->semester_id == $semester->id ? "selected" : "" }} @else {{ old('semester_id') == $semester->id ? "selected" : "" }} @endisset value="{{$semester->id}}" >{{$semester->name}}</option>                                                
-																								@endforeach
-																							</select>
-																							@error('semester_id')
-																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
-																									<strong>{{ $message }}</strong>
-																								</span>
-																							@enderror
-																						</div>
-																				</div>	
-																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">Select Course</label>
-																						<div class="col-sm-10">
-																							<select class="form-control course-option-field" id="courses_single" name="course_id" onchange="getCourse(this)">
-																								<option value="">Open this select menu</option>
-																								@foreach ($courses as $course)
-																								<option class="text-capitalize" @isset($lecturer)  {{ $lecturer->course_id == $course->id ? "selected" : "" }} @else  {{ old('course_id') == $course->id ? "selected" : "" }} @endisset value="{{$course->id}}" >{{$course->course_title}} ({{ $course->course_code }})</option>                                                
-																								@endforeach
-																							</select>
-																							@error('course_id')
-																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
-																									<strong>{{ $message }}</strong>
-																								</span>
-																							@enderror
-																						</div>
-																				</div>		
-																				<!--Select Semester --> 
-																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">Lecturer ID</label>
-																						<div class="col-sm-10">
-																							<input class="form-control @error('lecturer_id') is-invalid @enderror" name="lecturer_id" type="text" @isset($lecturer) value="{{ $lecturer->matric_number }}"  @else value="{{ old('lecturer_id') }}" @endisset placeholder="Lecturer ID">
-																							@error('lecturer_id')
-																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
-																									<strong>{{ $message }}</strong>
-																								</span>
-																							@enderror
-																						</div>
-																				</div>	
 																				<div class="form-group row mb-4">
 																						<label class="col-sm-2 col-form-label">Email</label>
 																						<div class="col-sm-10">
-																							<input class="form-control @error('email') is-invalid @enderror" name="email" type="email" @isset($lecturer) value="{{ $lecturer->email }}"  @else value="{{ old('email') }}" @endisset  placeholder="Lecturer Email">
+																							<input class="form-control @error('email') is-invalid @enderror" name="email" type="email" @isset($supervisor) value="{{ $supervisor->email }}"  @else value="{{ old('email') }}" @endisset  placeholder="Supervisor Email">
 																							@error('email')
 																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																									<strong>{{ $message }}</strong>
 																								</span>
 																							@enderror
 																						</div>
-																				</div>
-																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">First Name</label>
-																						<div class="col-sm-10">
-																							<input class="form-control @error('first_name') is-invalid @enderror" name="first_name" type="text" @isset($lecturer) value="{{ $lecturer->first_name }}"  @else value="{{ old('first_name') }}" @endisset placeholder="Lecturer First Name">
-																							@error('first_name')
-																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
-																									<strong>{{ $message }}</strong>
-																								</span>
-																							@enderror
-																						</div>
 																				</div>	
 																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">Last Name</label>
+																						<label class="col-sm-2 col-form-label">Name</label>
 																						<div class="col-sm-10">
-																							<input class="form-control @error('last_name') is-invalid @enderror" name="last_name" type="text" @isset($lecturer) value="{{ $lecturer->last_name }}"  @else value="{{ old('last_name') }}" @endisset placeholder="Lecturer Last Name">
-																							@error('last_name')
+																							<input class="form-control @error('name') is-invalid @enderror" name="name" type="text" @isset($supervisor) value="{{ $supervisor->name }}"  @else value="{{ old('name') }}" @endisset placeholder="Supervisor Last Name">
+																							@error('name')
 																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																									<strong>{{ $message }}</strong>
 																								</span>

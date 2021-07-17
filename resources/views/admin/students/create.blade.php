@@ -46,17 +46,17 @@
 																<form class="edit-profile m-b30" id="" method="POST" action="{{ route('admin_create_student') }}">
 																		@csrf
 																		<div class="">
-																				<!--Select Faculty --> 
+																				<!--Select school --> 
 																				<div class="form-group row mb-4">
 																						<label class="col-sm-2 col-form-label">Select Faculty</label>
 																						<div class="col-sm-10">
-																							<select class="form-control faculty-option-field" id="faculty" name="faculty_id" onchange="getDeptSingle(this)">
+																							<select class="form-control school-option-field" id="school" name="school_id" onchange="getDeptSingle(this)">
 																								<option value="">Open this select menu</option>
-																								@foreach ($faculties as $faculty)
-																								<option class="text-capitalize" {{ old('faculty_id') == $faculty->id ? "selected" : "" }} value="{{$faculty->id}}">{{$faculty->name}} ({{$faculty->code}})</option>                                                
+																								@foreach ($schools as $school)
+																								<option class="text-capitalize" {{ old('school_id') == $school->id ? "selected" : "" }} value="{{$school->id}}">{{$school->name}} ({{$school->code}})</option>                                                
 																								@endforeach
 																							</select>
-																							@error('faculty_id')
+																							@error('school_id')
 																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																									<strong>{{ $message }}</strong>
 																								</span>
@@ -79,24 +79,7 @@
 																								</span>
 																							@enderror
 																						</div>
-																				</div>	
-																				<!--Select Level --> 
-																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">Select Level</label>
-																						<div class="col-sm-10">
-																							<select class="form-control level-option-field" id="level_single" name="level_id">
-																								<option value="">Open this select menu</option>
-																								@foreach ($levels as $level)
-																								<option class="text-capitalize" {{ old('level_id') == $level->level ? "selected" : "" }} value="{{$level->level}}" >{{$level->name}}</option>                                                
-																								@endforeach
-																							</select>
-																							@error('level_id')
-																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
-																									<strong>{{ $message }}</strong>
-																								</span>
-																							@enderror
-																						</div>
-																				</div>			
+																				</div>		
 																				<!--Select Semester --> 
 																				<div class="form-group row mb-4">
 																						<label class="col-sm-2 col-form-label">Matric No.</label>
@@ -121,21 +104,10 @@
 																						</div>
 																				</div>
 																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">First Name</label>
+																						<label class="col-sm-2 col-form-label">Name</label>
 																						<div class="col-sm-10">
-																							<input class="form-control @error('first_name') is-invalid @enderror" name="first_name" type="text" value="{{ old('first_name') }}" placeholder="Student First Name">
-																							@error('first_name')
-																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
-																									<strong>{{ $message }}</strong>
-																								</span>
-																							@enderror
-																						</div>
-																				</div>	
-																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">Last Name</label>
-																						<div class="col-sm-10">
-																							<input class="form-control @error('last_name') is-invalid @enderror" name="last_name" type="text" value="{{ old('last_name') }}" placeholder="Student Last Name">
-																							@error('last_name')
+																							<input class="form-control @error('name') is-invalid @enderror" name="name" type="text" value="{{ old('name') }}" placeholder="Student First Name">
+																							@error('name')
 																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																									<strong>{{ $message }}</strong>
 																								</span>
@@ -144,7 +116,7 @@
 																				</div>																
 																				<div class="form-group row">
 																					<div class="col-sm-12  ml-auto">
-																							<h6>Note: First Name is password by default in lowercase<br>
+																							<h6>Note: Matric Number is password by default in lowercase<br>
 																							</h6>
 																					</div>
 																				</div>	
@@ -186,13 +158,13 @@
 																				<div class="form-group row mb-4">
 																						<label class="col-sm-2 col-form-label">Select Faculty</label>
 																						<div class="col-sm-10">
-																							<select class="form-control faculty-option-field" id="faculty_bulk" name="bulk_faculty_id" onchange="getDeptBulk(this)">
+																							<select class="form-control school-option-field" id="school_bulk" name="bulk_school_id" onchange="getDeptBulk(this)">
 																								<option value="">Open this select menu</option>
-																								@foreach ($faculties as $faculty)
-																								<option class="text-capitalize" @isset($course) {{ $course->faculty_id == $faculty->id ? "selected" : "" }} @else {{ old('bulk_faculty_id') == $faculty->id ? "selected" : "" }} @endisset value="{{$faculty->id}}">{{$faculty->name}} ({{$faculty->code}})</option>                                                
+																								@foreach ($schools as $school)
+																								<option class="text-capitalize" @isset($course) {{ $course->school_id == $school->id ? "selected" : "" }} @else {{ old('bulk_school_id') == $school->id ? "selected" : "" }} @endisset value="{{$school->id}}">{{$school->name}} ({{$school->code}})</option>                                                
 																								@endforeach
 																							</select>
-																							@error('bulk_faculty_id')
+																							@error('bulk_school_id')
 																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																									<strong>{{ $message }}</strong>
 																								</span>
@@ -206,27 +178,10 @@
 																							<select name="bulk_department_id" id="department_bulk" class="form-control department-option-field">
 																								<option value="">Open this select menu</option>
 																								@foreach ($departments as $department)
-																								<option class="text-capitalize" @isset($course) {{ $course->faculty_id == $faculty->id ? "selected" : "" }} @else {{ old('bulk_department_id') == $department->id ? "selected" : "" }} @endisset value="{{$department->id}}">{{$department->name}}</option>                                                
+																								<option class="text-capitalize" @isset($course) {{ $course->school_id == $school->id ? "selected" : "" }} @else {{ old('bulk_department_id') == $department->id ? "selected" : "" }} @endisset value="{{$department->id}}">{{$department->name}}</option>                                                
 																								@endforeach
 																							</select>
 																							@error('bulk_department_id')
-																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
-																									<strong>{{ $message }}</strong>
-																								</span>
-																							@enderror
-																						</div>
-																				</div>	
-																				<!--Select Level --> 
-																				<div class="form-group row mb-4">
-																						<label class="col-sm-2 col-form-label">Select Level</label>
-																						<div class="col-sm-10">
-																							<select class="form-control level-option-field" id="level" name="bulk_level_id">
-																								<option value="">Open this select menu</option>
-																								@foreach ($levels as $level)
-																								<option class="text-capitalize" @isset($course) {{ $course->level == $level->level ? "selected" : "" }} @else {{ old('bulk_level_id') == $level->level ? "selected" : "" }} @endisset  @isset($course) value="{{ $course->level }}" @else value="{{$level->level}}" @endisset >{{$level->name}}</option>                                                
-																								@endforeach
-																							</select>
-																							@error('bulk_level_id')
 																								<span class="invalid-feedback mb-2" role="alert" style="display: block">
 																									<strong>{{ $message }}</strong>
 																								</span>
