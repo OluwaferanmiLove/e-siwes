@@ -32,7 +32,7 @@
 										<ul class="card-courses-view">
 											<li class="card-courses-categories">
 												<h4>Matric Number:</h4>
-												<h3>{{Auth::user()->matric_number}}</h3>
+												<h3>{{Auth::user()->unique}}</h3>
 											</li>
 										</ul>
 									</div>
@@ -40,7 +40,7 @@
 										<ul class="card-courses-view">
 											<li class="card-courses-categories">
 												<h4>Name:</h4>
-												<h3>{{Auth::user()->first_name}} {{ Auth::user()->last_name }}</h3>
+												<h3>{{Auth::user()->name}}</h3>
 											</li>
 										</ul>
 									</div>									
@@ -56,7 +56,7 @@
 										<ul class="card-courses-view">
 											<li class="card-courses-categories">
 												<h4>Faculty:</h4>
-												<h3>{{$student->faculty->name}}</h3>
+												<h3>{{$student->school->name}}</h3>
 											</li>
 										</ul>
 									</div>
@@ -65,14 +65,6 @@
 											<li class="card-courses-categories">
 												<h4>Department:</h4>
 												<h3>{{$student->dept->name}}</h3>
-											</li>
-										</ul>
-									</div>
-									<div class="card-courses-list-bx">
-										<ul class="card-courses-view">
-											<li class="card-courses-categories">
-												<h4>Level:</h4>
-												<h3>{{$student->level->name}}</h3>
 											</li>
 										</ul>
 									</div>
