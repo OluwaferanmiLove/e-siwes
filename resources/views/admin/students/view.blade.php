@@ -24,11 +24,11 @@
                           <img src="{{$student->avatar != null ? asset('uploads/profile_pictures/'.$student->avatar) : asset('web2/images/avatar.png')}}" alt="{{$student->first_name}} {{$student->last_name}}">
                       </div>
                       <div class="employer-content">
-                          <h2 class="widget-title font-size-30  pb-1">{{$student->first_name}} {{$student->last_name}}</h2>
+                          <h2 class="widget-title font-size-30  pb-1">{{$student->name}}</h2>
                           <p class="font-size-16 mt-1 ">
-                            <span class="mr-2"><i class="fa fa-user mr-1"></i> {{$student->matric_number}}</span><br>
+                            <span class="mr-2"><i class="fa fa-user mr-1"></i> {{$student->unique}}</span><br>
                             <span class="mr-2"><i class="fa fa-envelope mr-1"></i> {{$student->email}}</span><br>
-                              <span class="mr-2"><i class="la la-phone mr-1"></i> {{$student->mobile != null ? $student->mobile : 'Not Uploaded'}}</span>
+                              <span class="mr-2"><i class="la la-phone mr-1"></i> {{$student->phone_number != null ? $student->phone_number : 'Not Uploaded'}}</span>
                           </span>
                           </p>
                     </div><!-- end employer-content -->
@@ -62,9 +62,8 @@
                               <li class="mb-3 d-flex align-items-center"><p><i class="la la-user"></i> <span class="color-text-2 font-weight-medium mr-1">Matric Number: </span><b style="font-size:20px">{{$student->matric_number}}</b></li>
                               <li class="mb-3 d-flex align-items-center"><p><i class="la la-envelope"></i> <span class="color-text-2 font-weight-medium mr-1">Email: </span><b style="font-size:20px">{{$student->email}}</b></li>
                               <li class="mb-3 d-flex align-items-center"><p><i class="la la-envelope"></i> <span class="color-text-2 font-weight-medium mr-1">Mobile Number: </span><b style="font-size:20px">{{$student->mobile != null ? $student->mobile : 'Not Uploaded'}}</b></li>
-                              <li class="mb-3 d-flex align-items-center"><p><i class="la la-book"></i> <span class="color-text-2 font-weight-medium mr-1">Faculty: </span><b style="font-size:20px">{{$student->faculty->name}}</b></li>
-                              <li class="mb-3 d-flex align-items-center"><p><i class="la la-book"></i> <span class="color-text-2 font-weight-medium mr-1">Department: </span><b style="font-size:20px">{{$student->dept->name}}</b></li>   
-                              <li class="mb-3 d-flex align-items-center"><p><i class="la la-book"></i> <span class="color-text-2 font-weight-medium mr-1">Level: </span><b style="font-size:20px">{{$student->level->name}}</b></li>
+                              <li class="mb-3 d-flex align-items-center"><p><i class="la la-book"></i> <span class="color-text-2 font-weight-medium mr-1">School: </span><b style="font-size:20px">{{$student->school->name}}</b></li>
+                              <li class="mb-3 d-flex align-items-center"><p><i class="la la-book"></i> <span class="color-text-2 font-weight-medium mr-1">Department: </span><b style="font-size:20px">{{$student->dept->name}}</b></li>
                               <li class="mb-3 d-flex align-items-center"><p><i class="la la-clock-o"></i> <span class="color-text-2 font-weight-medium mr-1">Registerred On: </span> <b style="font-size:20px">{{ date('D, M j, Y', strtotime($student->created_at))}}</b></li>
                             </ul>
                         </div>

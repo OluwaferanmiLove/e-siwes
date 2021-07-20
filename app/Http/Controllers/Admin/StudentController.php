@@ -176,7 +176,7 @@ class StudentController extends Controller
     public function view($id)
     {
         try {
-            $data['student'] = $u = User::where(['id' => $id, 'role' => 'Student'])->with('faculty:id,name')->with('dept:id,name')->with('level:id,name')->first();
+            $data['student'] = $u = User::where(['id' => $id, 'role' => 'Student'])->with('school:id,name')->with('dept:id,name')->first();
             $data['title'] = $u->first_name . ' ' . $u->last_name;
             return view('admin.students.view', $data);
         } catch (\Throwable $th) {
