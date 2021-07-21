@@ -1,6 +1,6 @@
 {{-- <script src="{{ asset('vendor/jquery.2.2.3.min.js')}}"></script> --}}
 <div class="flash-container">
-	{{-- @if(Session::has('message'))
+@if(Session::has('message'))
 	  <div class="alert {{ Session::get('alert-class') }} text-center" style="margin-bottom:10px;" role="alert">
 	    {{ Session::get('message') }}
 	    <a href="#" style="float:right;" class="alert-close" data-dismiss="alert">&times;</a>
@@ -12,8 +12,7 @@
 	        {!! session('status') !!}
 	        <a href="#" style="float:right;" class="alert-close" data-dismiss="alert">&times;</a>
 	    </div>
-	@endif --}}
-{{-- 
+	@endif
 	@if (session('warning'))
 	    <div class="alert alert-warning font-weight-700">
 	        {{ session('warning') }}
@@ -33,7 +32,7 @@
 	        {{ session('error') }}
 	        <a href="#" style="float:right;" class="alert-close" data-dismiss="alert">&times;</a>
 	    </div>
-	@endif --}}
+	@endif
 </div>
 <script
   src="https://code.jquery.com/jquery-3.5.1.js"

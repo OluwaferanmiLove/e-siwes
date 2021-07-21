@@ -24,7 +24,7 @@
 									@if (Auth::user()->avatar == null)										
 										<img src="{{ asset('uploads/avatar_pics.jpg') }}" alt="">
 									@else		
-										<img src="{{ asset('uploads/stuident_avatar/'.Auth::user()->avatar) }}" alt="{{Auth::user()->surname}} {{Auth::user()->last_name}}">										
+										<img src="{{ asset('uploads/student_avatar/'.Auth::user()->avatar) }}"  alt="{{Auth::user()->name}}">										
 									@endif
 								</div>
 								<div class="card-courses-full-dec">
@@ -55,7 +55,7 @@
 									<div class="card-courses-list-bx">
 										<ul class="card-courses-view">
 											<li class="card-courses-categories">
-												<h4>Faculty:</h4>
+												<h4>School:</h4>
 												<h3>{{$student->school->name}}</h3>
 											</li>
 										</ul>
@@ -65,6 +65,14 @@
 											<li class="card-courses-categories">
 												<h4>Department:</h4>
 												<h3>{{$student->dept->name}}</h3>
+											</li>
+										</ul>
+									</div>
+									<div class="card-courses-list-bx">
+										<ul class="card-courses-view">
+											<li class="card-courses-categories">
+												<h4>My Supervisor:</h4>
+												<h3>{{$student->sup->name ?? "Not Given Yet"}}</h3>
 											</li>
 										</ul>
 									</div>

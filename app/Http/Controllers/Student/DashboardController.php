@@ -21,7 +21,7 @@ class DashboardController extends Controller
     {
         $data['title'] = 'My Dashboard';
         // $data['class'] = Classes::where('class_id', Auth::user()->class_id)->first();
-        $data['student'] = $u = User::where('id', Auth::user()->id)->with('school:id,name')->with('dept:id,name')->first();
+        $data['student'] = $u = User::where('id', Auth::user()->id)->with('school:id,name')->with('dept:id,name')->with('sup:id,name')->first();
         // dd($u)->faculty;
         return view('student.dashboard.index', $data);
     }

@@ -30,7 +30,7 @@
 									<div class="form-group row">
 										<label class="col-sm-2 col-form-label">Matric Number</label>
 										<div class="col-sm-7">
-											<input class="form-control" type="" readonly value="{{Auth::user()->matric_number}}">
+											<input class="form-control" type="" readonly value="{{Auth::user()->unique}}">
 											{{-- <span class="help">If you want your invoices addressed to a company. Leave blank to use your full name.</span> --}}
 										</div>
 									</div>
@@ -46,21 +46,10 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label class="col-sm-2 col-form-label">First Name</label>
+										<label class="col-sm-2 col-form-label">Name</label>
 										<div class="col-sm-7">
-											<input class="form-control @error('first_name') is-invalid @enderror" type="text" name="first_name" value="{{Auth::user()->first_name}}">
-											@error('first_name')
-													<span class="invalid-feedback mb-2" role="alert" style="display: block">
-															<strong>{{ $message }}</strong>
-													</span>
-											@enderror
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-2 col-form-label">Last Name</label>
-										<div class="col-sm-7">
-											<input class="form-control @error('last_name') is-invalid @enderror" name="last_name" type="text" value="{{Auth::user()->last_name}}">
-											@error('last_name')
+											<input class="form-control @error('name') is-invalid @enderror" type="text" name="name" value="{{Auth::user()->name}}">
+											@error('name')
 													<span class="invalid-feedback mb-2" role="alert" style="display: block">
 															<strong>{{ $message }}</strong>
 													</span>
@@ -70,8 +59,8 @@
 									<div class="form-group row">
 										<label class="col-sm-2 col-form-label">Phone Number</label>
 										<div class="col-sm-7">
-											<input class="form-control @error('mobile') is-invalid @enderror" name="mobile" type="number" value="{{Auth::user()->mobile}}">
-											@error('mobile')
+											<input class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" type="number" value="{{Auth::user()->phone_number}}">
+											@error('phone_number')
 													<span class="invalid-feedback mb-2" role="alert" style="display: block">
 															<strong>{{ $message }}</strong>
 													</span>
@@ -91,45 +80,6 @@
 										</div>
 									</div>
 									<div class="seperator"></div>
-									
-									<div class="form-group row">
-										<div class="col-sm-10 ml-auto">
-											<h3>2. Address</h3>
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-2 col-form-label">Address</label>
-										<div class="col-sm-7">
-											<input class="form-control @error('address') is-invalid @enderror" name="address" type="text" value="{{Auth::user()->address}}">
-											@error('address')
-													<span class="invalid-feedback mb-2" role="alert" style="display: block">
-															<strong>{{ $message }}</strong>
-													</span>
-											@enderror
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-2 col-form-label">City</label>
-										<div class="col-sm-7">
-											<input class="form-control @error('city') is-invalid @enderror" name="city" type="text" value="{{Auth::user()->city}}">
-											@error('city')
-													<span class="invalid-feedback mb-2" role="alert" style="display: block">
-															<strong>{{ $message }}</strong>
-													</span>
-											@enderror
-										</div>
-									</div>
-									<div class="form-group row">
-										<label class="col-sm-2 col-form-label">State</label>
-										<div class="col-sm-7">
-											<input class="form-control @error('state') is-invalid @enderror" name="state" type="text" value="{{Auth::user()->state}}">
-											@error('state')
-													<span class="invalid-feedback mb-2" role="alert" style="display: block">
-															<strong>{{ $message }}</strong>
-													</span>
-											@enderror
-										</div>
-									</div>
                 </div>                                
 								<div class="">
 									<div class="">

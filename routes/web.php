@@ -34,6 +34,15 @@ Route::group(['prefix' => 'student', 'middleware' => ['auth', 'active', 'student
     Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Student\SettingsController::class, 'index'])->name('student_profile');
     Route::post('/change-password', [\App\Http\Controllers\Student\ChangePasswordController::class, 'change'])->name('change-password');
 
+    
+    //Assignment
+    Route::get('log-book', [\App\Http\Controllers\Student\SubjectController::class, 'index'])->name('log-book');
+    Route::get('siwes-week/{id}', [\App\Http\Controllers\Student\SubjectController::class, 'week'])->name('week');
+    Route::post('log', [\App\Http\Controllers\Student\SubjectController::class, 'log'])->name('log');
+    Route::get('delete-assignment/{id}', [\App\Http\Controllers\Student\SubjectController::class, 'delete_assignment']);
+    Route::match(['get', 'post'], '/submit-assignment', [\App\Http\Controllers\Student\SubjectController::class, 'submit'])->name('submit_assgnment');
+    Route::post('/fetch-course', [\App\Http\Controllers\Student\SubjectController::class, 'course']);
+
     //Assignment
     Route::get('assignments', [\App\Http\Controllers\Student\SubjectController::class, 'index']);
     Route::get('delete-assignment/{id}', [\App\Http\Controllers\Student\SubjectController::class, 'delete_assignment']);

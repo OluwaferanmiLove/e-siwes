@@ -67,7 +67,11 @@
                                 <div class="section-block mt-2 mb-2"></div>
                               </li>
                               <li class="mb-0">
-                                <a href="{{ route('logout') }}" class="d-block">
+                                <a href="{{ route('logout') }}" class="d-block" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                  </form>
                                   <i class="la la-power-off"></i> Logout
                                 </a>
                               </li>

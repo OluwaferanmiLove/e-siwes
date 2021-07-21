@@ -22,22 +22,14 @@ class SettingsController extends Controller
         if ($_POST) {
             $rules = array(
                 'email' => ['required', 'email', 'max:255', 'unique:users,email,'.Auth::user()->id],
-                'first_name' => ['required', 'max:255'],
-                'last_name' => ['required', 'max:255'],
-                'mobile' => ['max:255'],
-                'address' => ['max:255'],
-                'city' => ['max:255'],
-                'state' => ['max:255'],
+                'name' => ['required', 'max:255'],
+                'phone_number' => ['max:255'],
                 'avatar' => 'image|mimes:jpg,jpeg,png|max:5000',
             );
             $fieldNames = array(
                 'email' => 'Email',
-                'first_name'     => 'First Name',
-                'last_name'     => 'Last Name',
-                'mobile'   => 'Mobile Number',
-                'city'  => 'City',
-                'state'  => 'State',
-                'address'  => 'Address',
+                'name'     => 'Name',
+                'phone_number'   => 'Mobile Number',
                 'avatar'   => 'Profile Picture',
             );
             //dd($request->all());
@@ -55,13 +47,9 @@ class SettingsController extends Controller
                     $file->move($pictureDestination, $picture);
                 }
                 $user = User::find(Auth::user()->id);
-                $user->first_name = $request->first_name;
+                $user->name = $request->name;
                 $user->email = $request->email;
-                $user->last_name = $request->last_name;
-                $user->mobile = $request->mobile;
-                $user->address = $request->address;
-                $user->city = $request->city;
-                $user->state = $request->state;
+                $user->phone_number = $request->phone_number;
                 $user->avatar = $request->hasFile('avatar') ? $picture : $user->avatar;
                 $user->save();
                 Session::flash('success', 'Profile Updated Successfully');

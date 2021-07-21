@@ -11,10 +11,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Course;
+use App\Models\Days;
 use App\Models\Department;
 use App\Models\Faculties;
 use App\Models\Level;
+use App\Models\Log;
+use App\Models\Logbook;
 use App\Models\Semester;
+use App\Models\Weeks;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -30,11 +34,24 @@ class SubjectController extends Controller
 
     public function index()
     {
-        $data['title'] = 'Assignments';
+        $data['title'] = 'Siwes Weeks';
         $data['sn'] = 1;
-        $data['class'] = Classes::where('class_id', Auth::user()->class_id)->first();
-        $data['assignments'] = Assignment::where('user_id', Auth::user()->id)->with('faculty:id,name,code')->with('dept:id,name')->with('level:id,name')->with('semester:id,name')->with('course:id,course_title,course_code')->get();
-        return view('student.assignment.index', $data);
+        $data['class'] = [];
+        $data['assignments'] = [];
+        $data['weeks'] = $w = Weeks::orderBy('id', 'ASC')->get();
+        return view('student.log-book.index', $data);
+    }
+
+    public function week($id)
+    {
+        $data['week'] = $week = Weeks::find($id);
+        $data['days'] = $d = Days::orderBy('id', 'ASC')->with(['log' => function($query) use ($id)
+        {
+            $query->where('week_id', $id);
+        }])->get();
+        //dd($d);
+        $data['title'] = 'Week ' . $week->name;
+        return view('student.log-book.log', $data);
     }
 
     public function download_pdf()
@@ -52,6 +69,39 @@ class SubjectController extends Controller
         $pdf->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
         $pdf->loadView('result', compact(['subjects', 'sn', 'class']));
         return $pdf->download(Auth::user()->surname . ' ' . Auth::user()->last_name . ' ' . $class->name . ' result.pdf');
+    }
+    public function log(Request $request)
+    {
+        $rules = array(
+            'week_id' => ['required'],
+            'log' => ['required'],
+            'day_id' => ['required']
+        );
+        $fieldNames = array(
+            'week_id' => 'Week',
+            'log'     => 'Log Details',
+            'day_id'  => 'Day',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        $validator->setAttributeNames($fieldNames);
+        if ($validator->fails()) {
+            Session::flash('warning', 'Please check the form again!, ' . $request->day . ' ' . $request->week . ' log can not be empty');
+            return back()->withErrors($validator)->withInput();
+        } else {
+            try {
+                DB::table('logbooks')
+                    ->updateOrInsert(
+                        ['user_id' => Auth::user()->id, 'week_id' => $request->week_id, 'day_id' => $request->day_id],
+                        ['log' => $request->log]
+                    );
+                Session::flash('success', $request->day . ' ' . $request->week . ' Log Saved Successfully');
+                return redirect()->route('log-book');
+            } catch (\Throwable $th) {
+                Session::flash('error', $th->getMessage());
+                return back()->withErrors($validator)->withInput();
+            }
+        }
     }
 
     public function submit(Request $request)
@@ -118,8 +168,8 @@ class SubjectController extends Controller
     {
         try {
             $delete = Assignment::where(['user_id' => Auth::user()->id, 'id' => $id])->first();
-            if (File::exists(public_path('uploads/student_assignment/'.$delete->assignment))) {
-                File::delete(public_path('uploads/student_assignment/'.$delete->assignment));
+            if (File::exists(public_path('uploads/student_assignment/' . $delete->assignment))) {
+                File::delete(public_path('uploads/student_assignment/' . $delete->assignment));
             }
             Session::flash('success', "Assignment Deleted Successfully");
             $delete->delete();

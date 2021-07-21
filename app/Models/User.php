@@ -82,4 +82,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Department::class, 'department_id');
     }
+
+    
+    public function sup()
+    {
+        return $this->hasOne(User::class, 'supervisor_id');
+    }
 }
