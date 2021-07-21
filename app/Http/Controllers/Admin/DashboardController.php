@@ -8,6 +8,7 @@ use App\Models\Classes;
 use App\Models\Course;
 use App\Models\Department;
 use App\Models\Faculties;
+use App\Models\Schools;
 use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,6 +27,8 @@ class DashboardController extends Controller
         $data['student'] = User::where('role', 'Student')->count();
         $data['admin'] = User::where('role', 'Admin')->count();
         $data['supervisor'] = User::where('role', 'Supervisor')->count();
+        $data['school'] = Schools::count();
+        $data['dept'] = Department::count();
         return view('admin.dashboard.index', $data);
     }
 }

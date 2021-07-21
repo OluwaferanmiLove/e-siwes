@@ -3,18 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Classes;
+use App\Imports\StudentsImport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use App\Imports\UsersImport;
-use App\Models\Result;
 use App\Models\Department;
-use App\Models\Faculties;
-use App\Models\Level;
 use App\Models\Schools;
-use App\Models\Semester;
 use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
@@ -124,14 +119,12 @@ class StudentController extends Controller
         $rules = array(
             'bulk_school_id' => ['required', 'max:255'],
             'bulk_department_id' => ['required', 'max:255'],
-            'bulk_level_id' => ['required', 'max:255'],
             'bulk_student' => ['required', 'mimes:csv,xlsx,xls'],
         );
         $fieldNames = array(
             'bulk_school_id'   => 'Student school',
             'bulk_department_id' => 'Student Department',
-            'bulk_level_id'   => 'Student Level',
-            'bulk_student'   => 'Student Bulk File',
+            'bulk_student'   => 'Student Bulk Excel File',
         );
         //dd($request->all());
         $validator = Validator::make($request->all(), $rules);
@@ -143,13 +136,10 @@ class StudentController extends Controller
             try {
                 $request->session()->put('bulk_school_id', $request->bulk_school_id);
                 $request->session()->put('bulk_department_id', $request->bulk_department_id);
-                $request->session()->put('bulk_level_id', $request->bulk_level_id);
-                // Excel::import(new UsersImport, request()->file('bulk_student'));
-                // $this->check_student();
+                Excel::import(new StudentsImport, request()->file('bulk_student'));
                 Session::flash('success', 'Student Uploaded Successfully');
                 $request->session()->forget('bulk_school_id');
                 $request->session()->forget('bulk_department_id');
-                $request->session()->forget('bulk_level_id');
                 return redirect('admin/students');
             } catch (\Throwable $th) {
                 Session::flash('error', $th->getMessage());

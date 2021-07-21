@@ -14,14 +14,14 @@
                   <div class="notification-item">
                     <div class="dropdown">
                       <button class="notification-btn dot-status online-status dropdown-toggle" type="button" id="userDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{Auth::user()->avatar != null ? asset('uploads/profile_pictures/'.Auth::user()->avatar) : asset('web2/images/avatar.png')}}" alt="{{Auth::user()->first_name}}">
+                        <img src="{{Auth::user()->avatar != null ? asset('uploads/student_avatar/'.Auth::user()->avatar) : asset('web2/images/avatar.png')}}" alt="{{Auth::user()->first_name}}">
                       </button>
                       <div class="dropdown-menu" aria-labelledby="userDropdownMenu">
                         <div class="mess-dropdown">
                           <div class="mess__title d-flex align-items-center">
                             <div class="image dot-status online-status">
                               <a href="#">
-                                <img src="{{Auth::user()->avatar != null ? asset('uploads/profile_pictures/'.Auth::user()->avatar) : asset('web2/images/avatar.png')}}" alt="{{Auth::user()->first_name}}">
+                                <img src="{{Auth::user()->avatar != null ? asset('uploads/student_avatar/'.Auth::user()->avatar) : asset('web2/images/avatar.png')}}" alt="{{Auth::user()->first_name}}">
                               </a>
                             </div>
                             <div class="content">
@@ -40,29 +40,24 @@
                               </li>
                               <li class="mb-0">
                                 <a href="{{ url('admin/lecturers') }}" class="d-block">
-                                  <i class="la la-user"></i> Supervisor
+                                  <i class="la la-user"></i> Supervisors
                                 </a>
                               </li>
                               <li class="mb-0">
                                 <a href="{{ url('admin/students') }}" class="d-block">
-                                  <i class="la la-users"></i> Student
+                                  <i class="la la-users"></i> Students
                                 </a>
                               </li>
-                              <!-- <li class="mb-0">
-                                <a href="{{ url('admin/faculties') }}" class="d-block">
-                                  <i class="la la-book"></i>Faculty
+                              <li class="mb-0">
+                                <a href="{{ url('admin/schools') }}" class="d-block">
+                                  <i class="la la-book"></i>Schools
                                 </a>
-                              </li> -->
-                              <!-- <li class="mb-0">
+                              </li>
+                              <li class="mb-0">
                                 <a href="{{ url('admin/departments') }}" class="d-block">
                                   <i class="la la-book"></i> Department
                                 </a>
                               </li>
-                              <li class="mb-0">
-                                <a href="{{ url('admin/courses') }}" class="d-block">
-                                  <i class="la la-book"></i> Courses
-                                </a>
-                              </li> -->
                               <li class="mb-0">
                                 <div class="section-block mt-2 mb-2"></div>
                               </li>

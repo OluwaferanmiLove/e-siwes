@@ -47,7 +47,7 @@ class SubjectController extends Controller
     {
         $data['week'] = $week = Weeks::find($id);
         $data['days'] = $d = Days::orderBy('id', 'ASC')->with(['log' => function ($query) use ($id) {
-            $query->where('week_id', $id);
+            $query->where(['week_id' => $id, 'user_id' => Auth::user()->id]);
         }])->get();
         $data['title'] = 'Week ' . $week->name;
         return view('student.log-book.log', $data);
@@ -100,82 +100,6 @@ class SubjectController extends Controller
                 Session::flash('error', $th->getMessage());
                 return back()->withErrors($validator)->withInput();
             }
-        }
-    }
-
-    public function submit(Request $request)
-    {
-        if ($_POST) {
-            $rules = array(
-                'semester_id' => ['required', 'max:255'],
-                'course_id' => ['required', 'max:255'],
-                'assignment' => ['required', 'mimes:jpg,jpeg,png,xlsx,xls,docx,csv,txt,doc,pdf', 'max:10000']
-            );
-            $fieldNames = array(
-                'semester_id' => 'Semester',
-                'course_id'     => 'Course',
-                'assignment'     => 'Assignment',
-            );
-            //dd($request->all());
-            $validator = Validator::make($request->all(), $rules);
-            $validator->setAttributeNames($fieldNames);
-            if ($validator->fails()) {
-                Session::flash('warning', 'Please check the form again!');
-                return back()->withErrors($validator)->withInput();
-            } else {
-                //dd($request->all());
-                if ($request->file('assignment')) {
-                    $file = $request->file('assignment');
-                    $picture = 'Assignment' . Auth::user()->matric_number . date('dMY') . time() . '.' . $file->getClientOriginalExtension();
-                    $pictureDestination = 'uploads/student_assignment';
-                    $file->move($pictureDestination, $picture);
-                }
-                $user = new Assignment();
-                $user->user_id = Auth::user()->id;
-                $user->faculty_id = Auth::user()->faculty_id;
-                $user->dept_id = Auth::user()->dept_id;
-                $user->level_id = Auth::user()->level_id;
-                $user->semester_id = $request->semester_id;
-                $user->course_id = $request->course_id;
-                $user->assignment = $request->hasFile('assignment') ? $picture : $user->assignment;
-                $user->save();
-                Session::flash('success', 'Assignment Submitted Successfully');
-                return redirect('student/assignments');
-            }
-        } else {
-            $data['title'] = 'Submit Assignment';
-            $data['faculties'] = Faculties::orderBy('name', 'ASC')->get();
-            $data['departments'] = Department::orderBy('name', 'ASC')->get();
-            $data['levels'] = Level::orderBy('id', 'ASC')->get();
-            $data['semesters'] = Semester::orderBy('id', 'ASC')->get();
-            $data['courses'] = $f = Course::where(['faculty_id' => Auth::user()->faculty_id, 'department_id' => Auth::user()->dept_id, 'level' => Auth::user()->level_id])->with('faculty:id,name,code')->with('dept:id,name')->with('level_get:id,name')->with('semester_get:id,name')->orderBy('id', 'ASC')->get();
-            return view('student.assignment.submit', $data);
-        }
-    }
-
-    public function course(Request $request)
-    {
-        try {
-            $courses = Course::where(['faculty_id' => Auth::user()->faculty_id, 'department_id' => Auth::user()->dept_id, 'level' => Auth::user()->level_id, 'semester' => $request->semester_id])->orderBy('id', 'ASC')->get();
-            return $courses;
-        } catch (\Throwable $th) {
-            return false;
-        }
-    }
-
-    public function delete_assignment($id)
-    {
-        try {
-            $delete = Assignment::where(['user_id' => Auth::user()->id, 'id' => $id])->first();
-            if (File::exists(public_path('uploads/student_assignment/' . $delete->assignment))) {
-                File::delete(public_path('uploads/student_assignment/' . $delete->assignment));
-            }
-            Session::flash('success', "Assignment Deleted Successfully");
-            $delete->delete();
-            return back();
-        } catch (\Throwable $th) {
-            Session::flash('error', "Assignment not Delete");
-            return back();
         }
     }
 }
