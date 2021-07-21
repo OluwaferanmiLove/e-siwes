@@ -34,7 +34,7 @@ Route::group(['prefix' => 'student', 'middleware' => ['auth', 'active', 'student
     Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Student\SettingsController::class, 'index'])->name('student_profile');
     Route::post('/change-password', [\App\Http\Controllers\Student\ChangePasswordController::class, 'change'])->name('change-password');
 
-    
+
     //Assignment
     Route::get('log-book', [\App\Http\Controllers\Student\SubjectController::class, 'index'])->name('log-book');
     Route::get('siwes-week/{id}', [\App\Http\Controllers\Student\SubjectController::class, 'week'])->name('week');
@@ -50,17 +50,17 @@ Route::group(['prefix' => 'student', 'middleware' => ['auth', 'active', 'student
     Route::post('/fetch-course', [\App\Http\Controllers\Student\SubjectController::class, 'course']);
 });
 
-// Lecturer
-Route::group(['prefix' => 'lecturer', 'middleware' => ['auth', 'active', 'lecturer']], function () {
-    Route::get('/', [\App\Http\Controllers\Lecturer\DashboardController::class, 'index'])->name('lecturer');
+// Supervisor
+Route::group(['prefix' => 'supervisor', 'middleware' => ['auth', 'active', 'supervisor']], function () {
+    Route::get('/', [\App\Http\Controllers\Supervisor\DashboardController::class, 'index'])->name('supervisor');
 
-    //Assignments
-    Route::get('assignments', [\App\Http\Controllers\Lecturer\SubjectController::class, 'index']);
-    Route::get('delete-assignment/{id}', [\App\Http\Controllers\Lecturer\SubjectController::class, 'delete_assignment']);
+    //Student
+    Route::get('students', [\App\Http\Controllers\Supervisor\StudentsController::class, 'index']);
+    Route::get('view/{id}', [\App\Http\Controllers\Supervisor\StudentsController::class, 'view']);
 
     //Settings
-    Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Lecturer\SettingsController::class, 'index'])->name('lecturer_profile');
-    Route::post('/change-password', [\App\Http\Controllers\Lecturer\ChangePasswordController::class, 'change'])->name('lecturer-change-password');
+    Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Supervisor\SettingsController::class, 'index'])->name('supervisor_profile');
+    Route::post('/change-password', [\App\Http\Controllers\Supervisor\ChangePasswordController::class, 'change'])->name('supervisor-change-password');
 });
 
 //Admin

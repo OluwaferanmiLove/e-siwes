@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Weeks extends Model
 {
     use HasFactory;
+
+    public function log()
+    {
+        return $this->hasOne(Logbook::class, 'week_id')->withDefault();
+    }
 }

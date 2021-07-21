@@ -1,14 +1,14 @@
-@extends('student.layouts.app')
-@section('student')
+@extends('supervisor.layouts.app')
+@section('supervisor')
 
 <!--Main container start -->
 <main class="ttr-wrapper">
 	<div class="container-fluid">
 		<div class="db-breadcrumb">
-			<h4 class="breadcrumb-title">Student Profile</h4>
+			<h4 class="breadcrumb-title">Supervisor Profile</h4>
 			<ul class="db-breadcrumb-list">
 				<li><a href="#"><i class="fa fa-home"></i>Home</a></li>
-				<li>Student Profile</li>
+				<li>Supervisor Profile</li>
 			</ul>
 		</div>
 		<div class="row">
@@ -16,10 +16,10 @@
 			<div class="col-lg-12 m-b30">
 				<div class="widget-box">
 					<div class="wc-title">
-						<h4>Student Profile</h4>
+						<h4>Supervisor Profile</h4>
 					</div>
 					<div class="widget-inner">
-						<form class="edit-profile m-b30" method="POST" action="{{ route('student_profile') }}" enctype="multipart/form-data">
+						<form class="edit-profile m-b30" method="POST" action="{{ route('supervisor_profile') }}" enctype="multipart/form-data">
 							@csrf
 							<div class="">
 								<div class="form-group row">
@@ -28,7 +28,7 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label class="col-sm-2 col-form-label">Matric Number</label>
+									<label class="col-sm-2 col-form-label">Supervisor ID</label>
 									<div class="col-sm-7">
 										<input class="form-control" type="" readonly value="{{Auth::user()->unique}}">
 										{{-- <span class="help">If you want your invoices addressed to a company. Leave blank to use your full name.</span> --}}
@@ -67,7 +67,6 @@
 										@enderror
 									</div>
 								</div>
-
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label">Profile Picture</label>
 									<div class="col-sm-7">
@@ -94,7 +93,7 @@
 								</div>
 							</div>
 						</form>
-						<form class="edit-profile" method="post" action="{{ route('change-password') }}">
+						<form class="edit-profile" method="post" action="{{ route('supervisor-change-password') }}">
 							@csrf
 							<div class="">
 								<div class="form-group row">

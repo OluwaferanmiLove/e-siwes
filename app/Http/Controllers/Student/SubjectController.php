@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Week;
 
 class SubjectController extends Controller
 {
@@ -45,11 +46,9 @@ class SubjectController extends Controller
     public function week($id)
     {
         $data['week'] = $week = Weeks::find($id);
-        $data['days'] = $d = Days::orderBy('id', 'ASC')->with(['log' => function($query) use ($id)
-        {
+        $data['days'] = $d = Days::orderBy('id', 'ASC')->with(['log' => function ($query) use ($id) {
             $query->where('week_id', $id);
         }])->get();
-        //dd($d);
         $data['title'] = 'Week ' . $week->name;
         return view('student.log-book.log', $data);
     }

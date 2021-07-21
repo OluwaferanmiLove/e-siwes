@@ -29,8 +29,10 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
                     <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Home</a></li>
+                    @guest
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Sign Up</a></li>
+                    @endguest
                 </ul>
             </div>
         </div>
@@ -45,7 +47,13 @@
                 </div>
                 <div class="col-lg-8 align-self-baseline">
                     <p class="text-white-75 mb-5">Short details about what the project is all about. Short details about what the project is all about. Short details about what the project is all about.</p>
-                    <a class="btn btn-primary btn-xl" href="#about">Sign In</a>
+                    @auth
+                    <a class="btn btn-primary btn-xl" href="{{ route('admin') }}">Dashboard</a>
+                    @endauth
+
+                    @guest
+                    <a class="btn btn-primary btn-xl" href="{{ route('login') }}">Sign In</a>
+                    @endguest
                 </div>
             </div>
         </div>

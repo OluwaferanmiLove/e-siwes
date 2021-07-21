@@ -21,7 +21,7 @@
 			<!-- header left menu start -->
 			<ul class="ttr-header-navigation">
 				<li>
-					<a href="{{ url('/') }}" class="ttr-material-button ttr-submenu-toggle">HOME</a>
+					<a href="{{ url('index') }}" class="ttr-material-button ttr-submenu-toggle">HOME</a>
 				</li>
 			</ul>
 			<!-- header left menu end -->
@@ -39,8 +39,8 @@
 						</span></a>
 					<div class="ttr-header-submenu">
 						<ul>
-							<li><a href="{{ url('student/profile') }}">My profile</a></li>
-							<li><a href="{{ url('student/assignments') }}">Assignments</a></li>
+							<li><a href="{{ url('supervisor/profile') }}">My profile</a></li>
+							<li><a href="{{ url('supervisor/students') }}">Students</a></li>
 							<li><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Logout</a>
 								<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

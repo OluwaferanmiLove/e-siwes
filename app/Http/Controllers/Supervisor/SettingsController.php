@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\Supervisor;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -14,7 +14,7 @@ class SettingsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('student');
+        $this->middleware('supervisor');
     }
 
     public function index(Request $request)
@@ -57,7 +57,7 @@ class SettingsController extends Controller
             }
         } else {
             $data['title'] = 'My Profile';
-            return view('student.settings.profile', $data);
+            return view('supervisor.settings.profile', $data);
         }
     }
 }
