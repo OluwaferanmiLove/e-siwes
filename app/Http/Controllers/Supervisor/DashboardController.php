@@ -19,7 +19,7 @@ class DashboardController extends Controller
     public function index()
     {
         $data['title'] = 'My Dashboard';
-        $data['supervisor'] = $u = User::where('id', Auth::user()->id)->with('school:id,name')->with('dept:id,name')->first();
+        $data['supervisor'] = $u = User::where('id', Auth::user()->id)->with('school:id,name')->with('department:id,name')->first();
         return view('supervisor.dashboard.index', $data);
     }
 }
