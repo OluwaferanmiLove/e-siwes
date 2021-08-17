@@ -83,12 +83,14 @@
                   <td>
                     <div class="manage-candidate-wrap">
                       <h2 class="widget-title pb-0 font-size-15">
+                        <b>{{$supervisor->school->name }}</b>
                       </h2>
                     </div><!-- end manage-candidate-wrap -->
                   </td>
                   <td>
                     <div class="manage-candidate-wrap">
                       <h2 class="widget-title pb-0 font-size-15">
+                        <b>{{$supervisor->dept->name}}</b>
                       </h2>
                     </div><!-- end manage-candidate-wrap -->
                   </td>
