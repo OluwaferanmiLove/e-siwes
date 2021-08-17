@@ -6,7 +6,7 @@
         <div class="col-lg-12">
           <div class="menu-full-width">
             <div class="logo">
-              <a href="{{ url('') }}"><img src="{{ asset('dashboard/assets/images/logo.png') }}" alt="logo"></a>
+              <a href="{{ url('') }}"><img src="{{ asset('dashboard/assets/images/logo.png') }}" alt="logo" width="280"></a>
             </div><!-- end logo -->
             <div class="logo-right-content">
               <div class="header-action-button d-flex align-items-center">
