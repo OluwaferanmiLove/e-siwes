@@ -32,13 +32,13 @@ class SiwesController extends Controller
                 $user->supervisor_id = $supervisorId[$nextSupervisor];
                 $user->save();
                 // dd([$nextSupervisor]);
-                if ($nextSupervisor == $stu->count() ) {
+                if ($nextSupervisor == $su->count() - 1 ) {
                     // dd($nextSupervisor);
                     $nextSupervisor = 0;
                 }else{
                     $nextSupervisor = $nextSupervisor + 1;
                 }
-                dd($nextSupervisor);
+                // dd($nextSupervisor);
             }
             // for ($i=0; $i < $stu->count(); $i++) { 
             //     dd($stu);
