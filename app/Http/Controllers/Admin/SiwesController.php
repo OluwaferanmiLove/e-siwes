@@ -70,6 +70,7 @@ class SiwesController extends Controller
                     }
                     $settings->siwes_start = 'Yes';
                     $settings->siwes_start_date = Carbon::now();
+                    $settings->siwes_end = 'No';
                     $settings->siwes_end_date = Carbon::now()->addWeek(12);
                     $settings->save();                  
                     Session::flash('success', "Siwes Program Successfully");

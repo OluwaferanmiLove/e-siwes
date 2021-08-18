@@ -52,11 +52,12 @@
                     @if($siwes_settings->supervisor_assigned == 'Yes')
                     <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to Re-Assign Supervisor for this Siwes Program')">Re-Assign</button>
                     @else
-                <form action="{{ route('admin_manage_siwes') }}" method="POST">
-                  @csrf
-                  <input type="hidden" name="type" value="assign">
-                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to Assign Supervisor for this Siwes Program')">Assign Now</button>
-                </form>        &nbsp
+                    &nbsp
+                    <form action="{{ route('admin_manage_siwes') }}" method="POST">
+                      @csrf
+                      <input type="hidden" name="type" value="assign">
+                    <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to Assign Supervisor for this Siwes Program')">Assign Now</button>
+                    </form>
                     <button disabled class="btn btn-primary">Re-Assign</button>
                     @endif
                   @endisset
@@ -86,12 +87,18 @@
                 @isset($siwes_settings)
                     @if($siwes_settings->siwes_start == 'Yes')
                     <p style="color:black">Siwes Program Started On: <b>{{date('jS F Y', strtotime($siwes_settings->siwes_start_date))}}</b></p> 
-                    <p style="color:black">Siwes Program Expected to End On: <b>{{date('jS F Y', strtotime($siwes_settings->siwes_end_date))}}</b></p>
+                    <p style="color:black">Siwes Program Expected to End On: <b>{{date('jS F Y', strtotime($siwes_settings->siwes_end_date))}}</b></p> 
+                    <br>
+                <form action="{{ route('admin_manage_siwes') }}" method="POST">
+                  @csrf
+                  <input type="hidden" name="type" value="start">
+                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to Restart the Siwes Program')">Restart Siwes</button>
+                </form> 
                     @else  
                 <form action="{{ route('admin_manage_siwes') }}" method="POST">
                   @csrf
                   <input type="hidden" name="type" value="start">
-                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to Re-Assign Supervisor for this Siwes Program')">Start Siwes</button>
+                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to Start the Siwes Program')">Start Siwes</button>
                 </form>     
                     @endif
                   @endisset
