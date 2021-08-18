@@ -39,10 +39,24 @@
             </tr>
             <tr>
               <td></td>
-              <td>
+              <td style="display: flex;">
                 <form action="{{ route('admin_manage_siwes') }}" method="POST">
                   @csrf
-                <button type="submit" class="btn btn-primary" href="">Assign Now</button>
+                  <input type="hidden" name="type" value="assign">
+                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to Assign Supervisor for this Siwes Program')">Assign Now</button>
+                &nbsp
+                </form>
+                
+                <form action="{{ route('admin_manage_siwes') }}" method="POST">
+                  @csrf
+                  <input type="hidden" name="type" value="re_assign">
+                  @isset($siwes_settings)
+                    @if($siwes_settings->supervisor_assigned == 'Yes')
+                    <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to Re-Assign Supervisor for this Siwes Program')">Re-Assign</button>
+                    @else
+                    <button disabled class="btn btn-primary">Re-Assign</button>
+                    @endif
+                  @endisset
                 </form>
               </td>
             </tr>
@@ -70,9 +84,19 @@
         </div>
       </div><!-- billing-title-wrap -->
       <div class="billing-content pb-5">
-        <h4 style="color:black">Siwes Program is ment to be performed for 12weeks, Supervisor are ment to be assigned before you can start the Siwes program</h4>
-        <br>
-        <button class="btn btn-success">Start Siwes</button>
+        <p style="color:black">Siwes Program is ment to be performed for 12weeks, Supervisor are ment to be assigned before you can start the Siwes program</p>        
+                @isset($siwes_settings)
+                    @if($siwes_settings->siwes_start == 'Yes')
+                    <p style="color:black">Siwes Program Started On: <b>{{date('jS F Y', strtotime($siwes_settings->siwes_start_date))}}</b></p> 
+                    <p style="color:black">Siwes Program Expected to End On: <b>{{date('jS F Y', strtotime($siwes_settings->siwes_end_date))}}</b></p>
+                    @else  
+                <form action="{{ route('admin_manage_siwes') }}" method="POST">
+                  @csrf
+                  <input type="hidden" name="type" value="start">
+                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to Re-Assign Supervisor for this Siwes Program')">Start Siwes</button>
+                </form>     
+                    @endif
+                  @endisset
       </div><!-- end billing-form-item -->
     </div><!-- end col-lg-12 -->
   </div><!-- end row -->
