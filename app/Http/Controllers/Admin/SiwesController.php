@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class SiwesController extends Controller
 {
@@ -24,34 +25,18 @@ class SiwesController extends Controller
 
             $supervisorId = $su->pluck('id');
             $nextSupervisor = 0;
-            // dd($nextSupervisor);
             foreach ($stu as $key => $value) {
-                // dd($$key =$value);
-                    // dd($supervisorId[$nextSupervisor]);
                 $user = User::find($value->id);
                 $user->supervisor_id = $supervisorId[$nextSupervisor];
                 $user->save();
-                // dd([$nextSupervisor]);
                 if ($nextSupervisor == $su->count() - 1 ) {
-                    // dd($nextSupervisor);
                     $nextSupervisor = 0;
                 }else{
                     $nextSupervisor = $nextSupervisor + 1;
                 }
-                // dd($nextSupervisor);
             }
-            // for ($i=0; $i < $stu->count(); $i++) { 
-            //     dd($stu);
-            //     // dd($supervisorId[$nextSupervisor]);
-            // }
-
-
-
-            // foreach ($su as $st => $value) {               
-            // dd($value->id);
-            // }
-            
-            
+            Session::flash('success', "Supervisor Assigned Successfully");
+            return back();            
         }else{            
         $data['title'] = 'Manage Siwes Program';
         $data['supervisors'] = $s = User::where('role', 'Supervisor')->count();
