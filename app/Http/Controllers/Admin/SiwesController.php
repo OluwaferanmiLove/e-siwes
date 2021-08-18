@@ -17,10 +17,41 @@ class SiwesController extends Controller
 
     public function index()
     {
+        $get = array();
         if($_POST){
-            $su = User::where('role', 'Supervisor')->count();
-            $st = User::where('role', 'Student')->count();
-            dd($su, $st);            
+            $su = User::where('role', 'Supervisor')->get();
+            $stu = User::where('role', 'Student')->get();
+
+            $supervisorId = $su->pluck('id');
+            $nextSupervisor = 0;
+            // dd($nextSupervisor);
+            foreach ($stu as $key => $value) {
+                // dd($$key =$value);
+                    // dd($supervisorId[$nextSupervisor]);
+                $user = User::find($value->id);
+                $user->supervisor_id = $supervisorId[$nextSupervisor];
+                $user->save();
+                // dd([$nextSupervisor]);
+                if ($nextSupervisor == $stu->count() ) {
+                    // dd($nextSupervisor);
+                    $nextSupervisor = 0;
+                }else{
+                    $nextSupervisor = $nextSupervisor + 1;
+                }
+                dd($nextSupervisor);
+            }
+            // for ($i=0; $i < $stu->count(); $i++) { 
+            //     dd($stu);
+            //     // dd($supervisorId[$nextSupervisor]);
+            // }
+
+
+
+            // foreach ($su as $st => $value) {               
+            // dd($value->id);
+            // }
+            
+            
         }else{            
         $data['title'] = 'Manage Siwes Program';
         $data['supervisors'] = $s = User::where('role', 'Supervisor')->count();
