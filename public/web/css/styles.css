@@ -2965,13 +2965,13 @@ textarea.form-control-lg {
 
 .btn-primary {
   color: #fff;
-  background-color: #f4623a;
-  border-color: #f4623a;
+  background-color: #5AAEEE;
+  border-color: #5AAEEE;
 }
 .btn-primary:hover {
   color: #fff;
-  background-color: #cf5331;
-  border-color: #c34e2e;
+  background-color: #46A9BA;
+  border-color: #46A9BA;
 }
 .btn-check:focus + .btn-primary, .btn-primary:focus {
   color: #fff;
@@ -10956,7 +10956,7 @@ hr.divider-light {
 header.masthead {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 4.5rem);
-  background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../assets/img/bg-masthead.jpg");
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 100%), url("../assets/img/bg.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
