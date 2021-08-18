@@ -38,14 +38,12 @@
               <td>{{$students}}</td>
             </tr>
             <tr>
+              <td>Supervisors Assigned On</td>
+              <td>{{date('jS F Y', strtotime($siwes_settings->supervisor_assigned_date)) ?? "Not Assigned yet"}}</td>
+            </tr>
+            <tr>
               <td></td>
               <td style="display: flex;">
-                <form action="{{ route('admin_manage_siwes') }}" method="POST">
-                  @csrf
-                  <input type="hidden" name="type" value="assign">
-                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to Assign Supervisor for this Siwes Program')">Assign Now</button>
-                &nbsp
-                </form>
                 
                 <form action="{{ route('admin_manage_siwes') }}" method="POST">
                   @csrf
@@ -54,6 +52,11 @@
                     @if($siwes_settings->supervisor_assigned == 'Yes')
                     <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to Re-Assign Supervisor for this Siwes Program')">Re-Assign</button>
                     @else
+                <form action="{{ route('admin_manage_siwes') }}" method="POST">
+                  @csrf
+                  <input type="hidden" name="type" value="assign">
+                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to Assign Supervisor for this Siwes Program')">Assign Now</button>
+                </form>        &nbsp
                     <button disabled class="btn btn-primary">Re-Assign</button>
                     @endif
                   @endisset
@@ -75,11 +78,6 @@
           <div class="col-10">
             <h3 class="widget-title pb-0">Start Siwes</h3>
             <div class="title-shape margin-top-10px"></div>
-          </div>
-          <div class="col-2">
-            <div class="text-right">
-              <!-- <a href="{{ url('admin/create-student') }}" class="btn btn-success">Add Student</a> -->
-            </div>
           </div>
         </div>
       </div><!-- billing-title-wrap -->
