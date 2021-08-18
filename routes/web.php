@@ -67,6 +67,9 @@ Route::group(['prefix' => 'supervisor', 'middleware' => ['auth', 'active', 'supe
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin');
 
+    //Manage Siwes
+    Route::match(['get', 'post'], '/manage-siwes', [\App\Http\Controllers\Admin\SiwesController::class, 'index'])->name('admin_manage_siwes');
+
     //Settings
     Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('admin_profile');
     Route::post('/change-password', [\App\Http\Controllers\Admin\ChangePasswordController::class, 'change']);
