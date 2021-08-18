@@ -12,9 +12,11 @@
             <ul class="side-menu-ul">
                 <li class="{{ request()->is('admin')  ? 'page-active' : '' }}"><a href="{{ url('admin') }}"><i class="la la-dashboard icon-element"></i> Dashboard</a></li>
 
-                <li><a href="{{ route('admin_manage_siwes') }}" class="{{ request()->is('admin/manage-siwes')  ? 'page-active' : '' }}">
+                <li class="{{ request()->is('admin/manage-siwes*')  ? 'page-active' : '' }}">
+                    <a href="{{ route('admin_manage_siwes') }}">
                         <i class="la la-book icon-element"></i> Manage Siwes
-                    </a></li>
+                    </a>
+                </li>
 
                 <li class="{{ request()->is('admin/schools*') || request()->is('admin/view-school*') || request()->is('admin/edit-school*') || request()->is('admin/create-school')  ? 'page-active' : '' }}">
                     <a href="#"><i class="la la-book icon-element"></i> Schools <span class="la la-caret-down btn-toggle"></span></a>

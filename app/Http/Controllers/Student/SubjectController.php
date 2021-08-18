@@ -21,6 +21,7 @@ use App\Models\Semester;
 use App\Models\Weeks;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
+use App\Models\SiwesSettings;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Week;
@@ -44,7 +45,8 @@ class SubjectController extends Controller
     }
 
     public function week($id)
-    {
+    {        
+        $data['settings'] = SiwesSettings::find(1);
         $data['week'] = $week = Weeks::find($id);
         $data['days'] = $d = Days::orderBy('id', 'ASC')->with(['log' => function ($query) use ($id) {
             $query->where(['week_id' => $id, 'user_id' => Auth::user()->id]);

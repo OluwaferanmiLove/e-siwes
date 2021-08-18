@@ -35,10 +35,11 @@ Route::group(['prefix' => 'student', 'middleware' => ['auth', 'active', 'student
     Route::post('/change-password', [\App\Http\Controllers\Student\ChangePasswordController::class, 'change'])->name('change-password');
 
 
-    //Assignment
+    //Log Book
     Route::get('log-book', [\App\Http\Controllers\Student\SubjectController::class, 'index'])->name('log-book');
-    Route::get('siwes-week/{id}', [\App\Http\Controllers\Student\SubjectController::class, 'week'])->name('week');
-    Route::post('log', [\App\Http\Controllers\Student\SubjectController::class, 'log'])->name('log');
+    Route::get('siwes-week/{id}', [\App\Http\Controllers\Student\SubjectController::class, 'week'])->name('week')->middleware('siwes');
+    Route::post('log', [\App\Http\Controllers\Student\SubjectController::class, 'log'])->name('log')->middleware('siwes');
+
     Route::get('delete-assignment/{id}', [\App\Http\Controllers\Student\SubjectController::class, 'delete_assignment']);
     Route::match(['get', 'post'], '/submit-assignment', [\App\Http\Controllers\Student\SubjectController::class, 'submit'])->name('submit_assgnment');
     Route::post('/fetch-course', [\App\Http\Controllers\Student\SubjectController::class, 'course']);

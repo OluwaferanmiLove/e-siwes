@@ -50,7 +50,7 @@
                         <input type="hidden" name="week_id" value="{{$week->id}}">
                         <input type="hidden" name="day" value="{{$day->name}}">
                         <input type="hidden" name="day_id" value="{{$day->id}}">
-                        <textarea class="form-control" name="log" placeholder="Write {{$day->name}} {{$week->name}} deatils...." style="min-height: 300px;">{{ $day->log->log ?? "" }}</textarea>
+                        <textarea class="form-control" @if($settings->siwes_end == "Yes") disabled @endif name="log" placeholder="Write {{$day->name}} {{$week->name}} deatils...." style="min-height: 300px;">{{ $day->log->log ?? "" }}</textarea>
                         @error('log')
                         <span class="invalid-feedback mb-2" role="alert" style="display: block">
                           <strong>{{ $message }}</strong>
@@ -62,7 +62,9 @@
                       <div class="">
                         <div class="row">
                           <div class="text-right">
-                            <button type="submit" class="btn btn-success">Save</button>
+                            @if($settings->siwes_end == "No")                            
+                            <button type="submit"  class="btn btn-success">Save</button>
+                            @endif
                           </div>
                         </div>
                       </div>

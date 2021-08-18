@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use App\Models\SiwesSettings;
 
 class Authenticate extends Middleware
 {
@@ -14,6 +15,11 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+        $settings = SiwesSettings::find(1);
+        if($settings->siwes_end_date > Carbon::now()){
+            $settings->siwes_end = "Yes";
+        }
+        $settings->save();
         if (! $request->expectsJson()) {
             return route('login');
         }

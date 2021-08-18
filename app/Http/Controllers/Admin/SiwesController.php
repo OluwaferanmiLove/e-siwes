@@ -34,10 +34,9 @@ class SiwesController extends Controller
                 $nextSupervisor = $nextSupervisor + 1;
             }
         }
-        $now = Carbon::now();
         $settings = SiwesSettings::find(1);
         $settings->supervisor_assigned = 'Yes';
-        $settings->supervisor_assigned_date = $now;
+        $settings->supervisor_assigned_date = Carbon::now();
         $settings->save();
         $settings->save();
     }
